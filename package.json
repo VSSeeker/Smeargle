@@ -1,0 +1,17 @@
+{
+  "name": "@vsseeker/smeargle",
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "yarn@1.22.19",
+  "author": "Tycho Kaster <humanresourcesunofficial@proton.me>",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "env-paths": "^3.0.0",
+    "sharp": "^0.31.3",
+    "zx": "^7.1.1"
+  },
+  "scripts": {
+    "download-cards": "zx ./bin/download-cards-malie.mjs",
+    "convert-images": "zx ./bin/convert-images.mjs"
+  }
+}
