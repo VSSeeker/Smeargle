@@ -1,17 +1,19 @@
 {
   "name": "@vsseeker/smeargle",
-  "version": "0.0.0",
+  "private": true,
   "type": "module",
-  "packageManager": "yarn@1.22.19",
+  "version": "0.0.0",
   "author": "Tycho Kaster <humanresourcesunofficial@proton.me>",
   "license": "CC0-1.0",
   "devDependencies": {
+    "bun-types": "^0.8.1",
+    "dprint": "^0.40.2",
     "env-paths": "^3.0.0",
-    "sharp": "^0.31.3",
-    "zx": "^7.1.1"
+    "sharp": "^0.32.5",
+    "zx": "^7.2.3"
   },
   "scripts": {
-    "download-cards": "zx ./bin/download-cards-malie.mjs",
-    "convert-images": "zx ./bin/convert-images.mjs"
+    "download-cards": "bun ./bin/download-cards-malie.ts",
+    "convert-images": "bun ./bin/convert-images.ts"
   }
 }
