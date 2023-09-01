@@ -1,5 +1,15 @@
-const SUPPORTED_SERIES = ["BW", "XY", "SM", "SWSH", "SV", "Promo_SV"];
-const BANNED_SETS = ["N/A", "BLWEnergy", "XYEnergy"]; // BW and XY energy are already present in their base set
+const BANNED_SETS = [
+  "N/A",
+  "RSP",
+  "MCD",
+  "Energy",
+  // BW and XY energy are already present in their base set
+  "BLWEnergy",
+  "XYEnergy",
+  // Use PTCGL set instead of PTCGO
+  "SV1",
+  "Promo_SV",
+];
 // Temporary workaround for PTCGL sets
 const ADDITIONAL_SETS = {
   "SV1-ptcgl": "SVI",
@@ -18,7 +28,6 @@ export default async function getSetsData(): Promise<Record<string, string>> {
     const setInfo = setsData[setName];
     if (
       BANNED_SETS.includes(setInfo.externalId)
-      || !SUPPORTED_SERIES.includes(setInfo.block)
     ) {
       delete setsData[setName];
       continue;
