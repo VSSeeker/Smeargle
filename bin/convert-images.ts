@@ -1,12 +1,12 @@
-import "zx/globals";
+import * as fs from "fs";
+import { $ } from "zx";
+import { locales } from "./locales";
+import { cachePath, tmpPath } from "./paths.js";
 
-import { locales } from "./src/locales.js";
-import paths from "./src/paths.js";
+await fs.promises.mkdir(tmpPath, { recursive: true });
 
-await fs.ensureDir(paths.temp);
-
-const cardsDir = path.join(paths.cache, "cards");
-const alphalessFile = path.join(paths.temp, "tmp.png");
+const cardsDir = path.join(cachePath, "cards");
+const alphalessFile = path.join(tmpPath, "alphaless.png");
 
 for (const locale of locales) {
   const localeDir = path.join(cardsDir, locale);
@@ -27,17 +27,18 @@ for (const locale of locales) {
 
       const inputFile = path.join(setDir, file);
       const outputFile = path.join(outputDir, `${cardName}.avif`);
+
       // Noop if file already exists
       try {
         await fs.promises.access(outputFile);
-      } catch {
-        echo(`[${locale}] ${setId} ${cardName}`);
-        // Remove alpha layer from input file, then encode to AVIF
-        // avifenc only supports piping in from stdin if the file is .y4m (a video format)
-        // tmpfs recommended
-        await $`magick convert ${inputFile} -alpha off ${alphalessFile} && avifenc --min 25 --max 63 --speed 1 --premultiply --jobs all -y 420 ${alphalessFile} ${outputFile}`
-          .quiet();
-      }
+        continue;
+      } catch {}
+
+      echo(`[${locale}] ${setId} ${cardName}`);
+      // Remove alpha layer from input file, then encode to AVIF
+      // avifenc only supports piping in from stdin if the file is .y4m (a video format) so we use a named pipe instead
+      await $`rm -f ${alphalessFile} && mkfifo ${alphalessFile} && magick convert ${inputFile} -alpha off ${alphalessFile} && avifenc --min 25 --max 63 --speed 1 --premultiply --jobs all -y 420 ${alphalessFile} ${outputFile}`
+        .quiet();
     }
   }
 }
