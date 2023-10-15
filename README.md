@@ -2,13 +2,9 @@
 
 Smeargle provides imagery from the Pokemon Trading Card Game.
 
-Card images are made available in optimized AVIF format.
+Card images, set logos, and set symbols are available in optimized AVIF format.
 
-Set images are made available in optimized AVIF format.
-
-Set symbols are made available in optimized SVG format.
-
-Powered by malie.io (which sources data from PTCGO and PTCGL) and Bulbapedia.
+Powered by malie.io (which sources data from PTCGO and PTCGL), Bulbapedia, and [CardMavin](https://cardmavin.com/pokemon/pokemon-card-set-symbols).
 
 ## System dependencies
 

@@ -10,18 +10,12 @@
     "dprint": "^0.40.2",
     "env-paths": "^3.0.0",
     "zx": "^7.2.3",
-    "cheerio": "^1.0.0-rc.12",
-    "puppeteer": "^21.3.8"
+    "cheerio": "^1.0.0-rc.12"
   },
-  "trustedDependencies": [
-    "puppeteer"
-  ],
   "scripts": {
     "download-cards": "bun ./bin/download-cards-malie.ts",
-    "download-sets": "bun ./bin/download-sets-bulba.ts",
+    "download-sets": "bun ./bin/download-sets.ts",
     "convert-cards": "bun ./bin/convert-cards.ts",
-    "convert-set-symbols": "bun ./bin/convert-set-symbols.ts",
-    "convert-set-logos": "bun ./bin/convert-set-logos.ts",
-    "convert-sets": "bun run convert-set-symbols && bun run convert-set-logos"
+    "convert-sets": "bun ./bin/convert-sets.ts"
   }
 }
