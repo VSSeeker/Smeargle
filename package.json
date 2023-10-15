@@ -19,7 +19,9 @@
   "scripts": {
     "download-cards": "bun ./bin/download-cards-malie.ts",
     "download-sets": "bun ./bin/download-sets-bulba.ts",
-    "convert-cards": "bun ./bin/convert-images.ts",
-    "convert-sets": "bun ./bin/convert-sets.ts"
+    "convert-cards": "bun ./bin/convert-cards.ts",
+    "convert-set-symbols": "bun ./bin/convert-set-symbols.ts",
+    "convert-set-logos": "bun ./bin/convert-set-logos.ts",
+    "convert-sets": "bun run convert-set-symbols && bun run convert-set-logos"
   }
 }

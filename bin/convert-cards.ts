@@ -35,10 +35,12 @@ for (const locale of locales) {
         continue;
       } catch {}
 
-      echo(`[${locale}] ${setId} ${cardName}`);
+      console.log(`[${locale}] ${setId} ${cardName}`);
       // Remove alpha layer from input file, then encode to AVIF
-      // avifenc only supports piping in from stdin if the file is .y4m (a video format) so we use a named pipe instead
-      await $`rm -f ${alphalessFile} && mkfifo ${alphalessFile} && magick convert ${inputFile} -alpha off ${alphalessFile} && avifenc --min 25 --max 63 --speed 1 --premultiply --jobs all -y 420 ${alphalessFile} ${outputFile}`
+      // avifenc only supports piping in from stdin if the file is .y4m (a video format)
+      // mkfifo doesn't work. tmpfs recommended so everything still runs in memory
+      await $`magick convert ${inputFile} -alpha off ${alphalessFile}`.quiet();
+      await $`avifenc --min 25 --max 63 --speed 1 --premultiply --jobs all -y 420 ${alphalessFile} ${outputFile}`
         .quiet();
     }
   }

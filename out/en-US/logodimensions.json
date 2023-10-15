@@ -1,0 +1,446 @@
+{
+  "JU": {
+    "width": 160,
+    "height": 111
+  },
+  "FO": {
+    "width": 152,
+    "height": 127
+  },
+  "B2": {
+    "width": 180,
+    "height": 134
+  },
+  "TR": {
+    "width": 400,
+    "height": 137
+  },
+  "G1": {
+    "width": 250,
+    "height": 110
+  },
+  "G2": {
+    "width": 1280,
+    "height": 569
+  },
+  "N1": {
+    "width": 1280,
+    "height": 422
+  },
+  "N2": {
+    "width": 200,
+    "height": 90
+  },
+  "N3": {
+    "width": 308,
+    "height": 230
+  },
+  "N4": {
+    "width": 200,
+    "height": 95
+  },
+  "LC": {
+    "width": 200,
+    "height": 74
+  },
+  "EX": {
+    "width": 1080,
+    "height": 247
+  },
+  "AQ": {
+    "width": 190,
+    "height": 60
+  },
+  "SK": {
+    "width": 210,
+    "height": 65
+  },
+  "RS": {
+    "width": 581,
+    "height": 85
+  },
+  "SS": {
+    "width": 572,
+    "height": 76
+  },
+  "DR": {
+    "width": 562,
+    "height": 84
+  },
+  "MA": {
+    "width": 578,
+    "height": 145
+  },
+  "HL": {
+    "width": 575,
+    "height": 305
+  },
+  "FL": {
+    "width": 186,
+    "height": 108
+  },
+  "TRR": {
+    "width": 192,
+    "height": 80
+  },
+  "DX": {
+    "width": 573,
+    "height": 132
+  },
+  "EM": {
+    "width": 210,
+    "height": 33
+  },
+  "UF": {
+    "width": 571,
+    "height": 215
+  },
+  "DS": {
+    "width": 1280,
+    "height": 323
+  },
+  "LM": {
+    "width": 578,
+    "height": 210
+  },
+  "HP": {
+    "width": 195,
+    "height": 98
+  },
+  "CG": {
+    "width": 204,
+    "height": 98
+  },
+  "DF": {
+    "width": 1080,
+    "height": 284
+  },
+  "PK": {
+    "width": 206,
+    "height": 92
+  },
+  "DP": {
+    "width": 654,
+    "height": 110
+  },
+  "MT": {
+    "width": 581,
+    "height": 152
+  },
+  "SW": {
+    "width": 1080,
+    "height": 299
+  },
+  "GE": {
+    "width": 582,
+    "height": 130
+  },
+  "MD": {
+    "width": 577,
+    "height": 147
+  },
+  "LA": {
+    "width": 600,
+    "height": 164
+  },
+  "SF": {
+    "width": 600,
+    "height": 186
+  },
+  "PL": {
+    "width": 1116,
+    "height": 216
+  },
+  "RR": {
+    "width": 577,
+    "height": 170
+  },
+  "SV": {
+    "width": 1126,
+    "height": 320
+  },
+  "AR": {
+    "width": 1213,
+    "height": 351
+  },
+  "HS": {
+    "width": 997,
+    "height": 418
+  },
+  "UL": {
+    "width": 1280,
+    "height": 290
+  },
+  "UD": {
+    "width": 1280,
+    "height": 304
+  },
+  "TM": {
+    "width": 1280,
+    "height": 333
+  },
+  "CL": {
+    "width": 845,
+    "height": 200
+  },
+  "BLW": {
+    "width": 1280,
+    "height": 133
+  },
+  "EPO": {
+    "width": 1280,
+    "height": 298
+  },
+  "NVI": {
+    "width": 1280,
+    "height": 296
+  },
+  "NXD": {
+    "width": 600,
+    "height": 201
+  },
+  "DEX": {
+    "width": 588,
+    "height": 169
+  },
+  "DRX": {
+    "width": 554,
+    "height": 171
+  },
+  "DRV": {
+    "width": 575,
+    "height": 155
+  },
+  "BCR": {
+    "width": 588,
+    "height": 221
+  },
+  "PLS": {
+    "width": 1280,
+    "height": 288
+  },
+  "PLF": {
+    "width": 1280,
+    "height": 321
+  },
+  "PLB": {
+    "width": 513,
+    "height": 136
+  },
+  "LTR": {
+    "width": 1280,
+    "height": 365
+  },
+  "KSS": {
+    "width": 580,
+    "height": 198
+  },
+  "XY": {
+    "width": 1280,
+    "height": 321
+  },
+  "FLF": {
+    "width": 1280,
+    "height": 526
+  },
+  "FFI": {
+    "width": 1280,
+    "height": 504
+  },
+  "PHF": {
+    "width": 1280,
+    "height": 615
+  },
+  "PRC": {
+    "width": 1280,
+    "height": 430
+  },
+  "DCR": {
+    "width": 575,
+    "height": 254
+  },
+  "ROS": {
+    "width": 1280,
+    "height": 580
+  },
+  "AOR": {
+    "width": 1280,
+    "height": 536
+  },
+  "BKT": {
+    "width": 1280,
+    "height": 445
+  },
+  "BKP": {
+    "width": 1280,
+    "height": 271
+  },
+  "GEN": {
+    "width": 578,
+    "height": 126
+  },
+  "FCO": {
+    "width": 1280,
+    "height": 374
+  },
+  "STS": {
+    "width": 1280,
+    "height": 426
+  },
+  "EVO": {
+    "width": 1280,
+    "height": 308
+  },
+  "SUM": {
+    "width": 1280,
+    "height": 289
+  },
+  "GRI": {
+    "width": 1280,
+    "height": 470
+  },
+  "BUS": {
+    "width": 1280,
+    "height": 448
+  },
+  "SLG": {
+    "width": 1280,
+    "height": 499
+  },
+  "CIN": {
+    "width": 1280,
+    "height": 503
+  },
+  "UPR": {
+    "width": 1280,
+    "height": 537
+  },
+  "FLI": {
+    "width": 1280,
+    "height": 671
+  },
+  "CES": {
+    "width": 1280,
+    "height": 617
+  },
+  "DRM": {
+    "width": 1280,
+    "height": 664
+  },
+  "LOT": {
+    "width": 1280,
+    "height": 420
+  },
+  "TEU": {
+    "width": 1280,
+    "height": 472
+  },
+  "DET": {
+    "width": 1280,
+    "height": 725
+  },
+  "UNB": {
+    "width": 1006,
+    "height": 421
+  },
+  "UNM": {
+    "width": 1280,
+    "height": 597
+  },
+  "HIF": {
+    "width": 1280,
+    "height": 587
+  },
+  "CEC": {
+    "width": 1280,
+    "height": 614
+  },
+  "SSH": {
+    "width": 1280,
+    "height": 250
+  },
+  "RCL": {
+    "width": 1280,
+    "height": 459
+  },
+  "DAA": {
+    "width": 1280,
+    "height": 345
+  },
+  "CPA": {
+    "width": 1280,
+    "height": 464
+  },
+  "VIV": {
+    "width": 1280,
+    "height": 509
+  },
+  "SHF": {
+    "width": 1280,
+    "height": 633
+  },
+  "BST": {
+    "width": 1280,
+    "height": 422
+  },
+  "CRE": {
+    "width": 1280,
+    "height": 680
+  },
+  "EVS": {
+    "width": 1280,
+    "height": 513
+  },
+  "CEL": {
+    "width": 557,
+    "height": 130
+  },
+  "FST": {
+    "width": 1280,
+    "height": 519
+  },
+  "BRS": {
+    "width": 1280,
+    "height": 529
+  },
+  "ASR": {
+    "width": 731,
+    "height": 250
+  },
+  "PGO": {
+    "width": 900,
+    "height": 565
+  },
+  "LOR": {
+    "width": 720,
+    "height": 278
+  },
+  "SIT": {
+    "width": 621,
+    "height": 291
+  },
+  "CRZ": {
+    "width": 720,
+    "height": 272
+  },
+  "SVI": {
+    "width": 898,
+    "height": 260
+  },
+  "PAL": {
+    "width": 660,
+    "height": 217
+  },
+  "OBF": {
+    "width": 1194,
+    "height": 481
+  },
+  "MEW": {
+    "width": 1201,
+    "height": 912
+  },
+  "PAR": {
+    "width": 1200,
+    "height": 398
+  }
+}
