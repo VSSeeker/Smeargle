@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import * as path from "path";
 import { $ } from "zx";
 import { locales } from "./locales";
 import { cachePath, tmpPath } from "./paths.js";

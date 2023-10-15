@@ -10,10 +10,8 @@ Set symbols are made available in optimized SVG format.
 
 Powered by malie.io (which sources data from PTCGO and PTCGL) and Bulbapedia.
 
-## Dependencies
+## System dependencies
 
 - Bun
 - ImageMagick
 - avifenc
-- svgo
-- potrace

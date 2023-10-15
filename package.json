@@ -6,13 +6,20 @@
   "author": "Tycho Kaster <humanresourcesunofficial@proton.me>",
   "license": "CC0-1.0",
   "devDependencies": {
-    "bun-types": "^0.8.1",
+    "bun-types": "^1.0.6",
     "dprint": "^0.40.2",
     "env-paths": "^3.0.0",
-    "zx": "^7.2.3"
+    "zx": "^7.2.3",
+    "cheerio": "^1.0.0-rc.12",
+    "puppeteer": "^21.3.8"
   },
+  "trustedDependencies": [
+    "puppeteer"
+  ],
   "scripts": {
     "download-cards": "bun ./bin/download-cards-malie.ts",
-    "convert-images": "bun ./bin/convert-images.ts"
+    "download-sets": "bun ./bin/download-sets-bulba.ts",
+    "convert-cards": "bun ./bin/convert-images.ts",
+    "convert-sets": "bun ./bin/convert-sets.ts"
   }
 }
