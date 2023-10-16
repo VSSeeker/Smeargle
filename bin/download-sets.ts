@@ -3,6 +3,9 @@ import * as fs from "fs";
 import * as path from "path";
 import { cachePath } from "./paths";
 
+// Recommended to run first without, then run later with this if symbols are missing
+const USE_BULBAPEDIA_SYMBOLS = process.env.USE_BULBAPEDIA_SYMBOLS === "1";
+
 const setsPage = await fetch(
   "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_Trading_Card_Game_expansions",
 ).then(r => r.text());
@@ -37,7 +40,11 @@ for (const row of setRows) {
   const dash = setName.indexOf("—");
   if (dash !== -1) setName = setName.slice(dash + 1).trim();
   if (!setName.includes("Trainer Kit")) {
-    setName = setName.replace(/^EX /, "").replace(/McDonald's Collection /, "McDonald's ");
+    setName = setName
+      .replace(/^EX /, "")
+      .replace(/McDonald's Collection /, "McDonald's ")
+      .replace("Pokémon TCG: ", "")
+      .replace(/ Base Set$/, "");
   }
 
   if (setName && abbr) setCodes.set(setName, abbr);
@@ -61,18 +68,35 @@ for (const row of setRows) {
   } catch (e) {
     console.error(e);
   }
+
+  if (USE_BULBAPEDIA_SYMBOLS) {
+    const setSymbol = $sets(row).find("img").eq(0).attr("src");
+    const setSymbolDownloadUrl = convertMWThumb(setSymbol);
+    console.log(`${abbr} [${setSymbolDownloadUrl}] => ${setCachePath}`);
+    try {
+      const setLogoPath = path.join(setCachePath, `symbol.png`);
+      await writeCache(setSymbolDownloadUrl, setLogoPath);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }
 
 const symbolRows = $symbols("tbody tr");
 for (const row of symbolRows) {
   let rowSet = $symbols(row).find("td").first().text().trim();
-  const rowSymbol = $symbols(row).find("td").last().find("img").attr("data-src");
+  rowSet = rowSet
+    .replace(/ Base Set$/, "")
+    .replace(" and ", " & ")
+    .replace("Fire Red", "FireRed")
+    .replace("Leaf Green", "LeafGreen")
+    .replace("Pokemon", "Pokémon");
 
+  const rowSymbol = $symbols(row).find("td").last().find("img").attr("data-src");
   const setAbbr = setCodes.get(rowSet);
+
   if (!rowSymbol || !setAbbr) continue;
   console.log(rowSet, setAbbr, rowSymbol);
-
-  rowSet = rowSet.replace(/ Base Set$/, "").replace(" and ", " & ");
 
   const setCachePath = path.join(setsCachePath, setAbbr);
   await fs.promises.mkdir(setCachePath, { recursive: true });
@@ -80,6 +104,20 @@ for (const row of symbolRows) {
   const setSymbolPath = path.join(setCachePath, `symbol.png`);
 
   await writeCache(rowSymbol, setSymbolPath);
+}
+
+const promoBase = path.join(setsCachePath, "NP");
+const promoSets = ["HSP", "BWP", "XYP", "SMP", "SWSHP", "SVP"];
+
+const inputFile = path.join(promoBase, `symbol.png`);
+for (const set of promoSets) {
+  const promoPath = path.join(setsCachePath, set);
+  const outputFile = path.join(promoPath, "symbol.png");
+  if (!fs.existsSync(outputFile)) {
+    console.log("Clone", set, inputFile, outputFile);
+    await fs.promises.mkdir(promoPath, { recursive: true });
+    await fs.promises.copyFile(inputFile, outputFile);
+  }
 }
 
 async function writeCache(from: string, to: string) {
