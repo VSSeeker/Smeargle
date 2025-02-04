@@ -442,5 +442,41 @@
   "PAR": {
     "width": 1200,
     "height": 398
+  },
+  "RG": {
+    "width": 186,
+    "height": 108
+  },
+  "PAF": {
+    "width": 1200,
+    "height": 656
+  },
+  "TEF": {
+    "width": 1199,
+    "height": 474
+  },
+  "TWM": {
+    "width": 1225,
+    "height": 523
+  },
+  "SFA": {
+    "width": 1830,
+    "height": 860
+  },
+  "SCR": {
+    "width": 5600,
+    "height": 2074
+  },
+  "SSP": {
+    "width": 1201,
+    "height": 531
+  },
+  "PRE": {
+    "width": 3438,
+    "height": 1593
+  },
+  "JTG": {
+    "width": 2027,
+    "height": 637
   }
 }
