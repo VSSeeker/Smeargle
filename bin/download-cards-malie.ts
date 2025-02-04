@@ -2,7 +2,7 @@ import "zx/globals";
 import * as fs from "fs";
 
 import { locales } from "./locales";
-import malieMap from "./malieimages.json";
+import imageUrls from "./malieimages.json";
 import { assetsPath, cachePath } from "./paths";
 
 const OVERRIDE_CARDS = process.env.OVERRIDE_CARDS === "1";
@@ -11,7 +11,7 @@ const DOWNLOAD_EXISTING_CARDS = process.env.DOWNLOAD_EXISTING_CARDS === "1";
 
 const sets = new Set();
 for (const locale of locales) {
-  for (const [cardPath, downloadUrl] of Object.entries(malieMap)) {
+  for (const [cardPath, downloadUrl] of Object.entries(imageUrls)) {
     const [set, cardNum] = cardPath.split("/");
     const setCachePath = path.join(cachePath, "cards", locale, set);
     const setAssetsPath = path.join(assetsPath, locale, set);

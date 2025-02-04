@@ -6,11 +6,11 @@
   "author": "Tycho Kaster <humanresourcesunofficial@proton.me>",
   "license": "CC0-1.0",
   "devDependencies": {
-    "bun-types": "^1.0.6",
-    "dprint": "^0.40.2",
+    "bun-types": "^1.2.2",
+    "dprint": "^0.49.0",
     "env-paths": "^3.0.0",
-    "zx": "^7.2.3",
-    "cheerio": "^1.0.0-rc.12"
+    "zx": "^8.3.2",
+    "cheerio": "^1.0.0"
   },
   "scripts": {
     "download-cards": "bun ./bin/download-cards-malie.ts",
