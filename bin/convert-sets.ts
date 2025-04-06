@@ -23,7 +23,7 @@ for (const code of setCodes) {
     console.log(logoFile);
     await fs.promises.mkdir(outputDir, { recursive: true });
     try {
-      await $`avifenc --min 25 --max 63 --speed 1 --premultiply --jobs all -y 420 ${logoFile} ${logoOutput}`.quiet();
+      await $`avifenc -q 30 --speed 1 --premultiply --jobs all -y 420 ${logoFile} ${logoOutput}`.quiet();
       logoSuccess = true;
     } catch (e) {
       console.error(e);
@@ -36,7 +36,7 @@ for (const code of setCodes) {
     console.log(symbolFile);
     await fs.promises.mkdir(outputDir, { recursive: true });
     try {
-      await $`avifenc --min 25 --max 63 --speed 1 --premultiply --jobs all -y 420 ${symbolFile} ${symbolOutput}`
+      await $`avifenc -q 30 --speed 1 --premultiply --jobs all -y 420 ${symbolFile} ${symbolOutput}`
         .quiet();
     } catch (e) {
       console.error(e);
