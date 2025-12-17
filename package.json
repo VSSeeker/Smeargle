@@ -3,19 +3,23 @@
   "private": true,
   "type": "module",
   "version": "0.0.0",
-  "author": "Tycho Kaster <humanresourcesunofficial@proton.me>",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@biomejs/biome": "^2.3.10",
     "bun-types": "^1.2.2",
-    "dprint": "^0.49.0",
+    "cheerio": "^1.0.0",
     "env-paths": "^3.0.0",
-    "zx": "^8.3.2",
-    "cheerio": "^1.0.0"
+    "zx": "^8.3.2"
   },
   "scripts": {
     "download-cards": "bun ./bin/download-cards-malie.ts",
     "download-sets": "bun ./bin/download-sets.ts",
     "convert-cards": "bun ./bin/convert-cards.ts",
-    "convert-sets": "bun ./bin/convert-sets.ts"
+    "convert-sets": "bun ./bin/convert-sets.ts",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check": "biome check .",
+    "check:write": "biome check --write .",
+    "ci": "biome ci ."
   }
 }

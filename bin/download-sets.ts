@@ -5,7 +5,7 @@ import { cachePath } from "./paths";
 
 const setsPage = await fetch(
   "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_Trading_Card_Game_expansions",
-).then(r => r.text());
+).then((r) => r.text());
 
 const $sets = cheerioLoad(setsPage);
 
@@ -90,29 +90,19 @@ for (const set of promoSets) {
 }
 
 const tkSetSymbols = {
-  "TK5E":
-    "https://archives.bulbagarden.net/media/upload/thumb/1/1f/SetSymbolExcadrill_Half_Deck.png/30px-SetSymbolExcadrill_Half_Deck.png",
-  "TK5Z":
-    "https://archives.bulbagarden.net/media/upload/thumb/0/01/SetSymbolZoroark_Half_Deck.png/30px-SetSymbolZoroark_Half_Deck.png",
-  "TK6S":
-    "https://archives.bulbagarden.net/media/upload/thumb/4/46/SetSymbolSylveon_Half_Deck.png/30px-SetSymbolSylveon_Half_Deck.png",
-  "TK6N":
-    "https://archives.bulbagarden.net/media/upload/thumb/3/38/SetSymbolNoivern_Half_Deck.png/30px-SetSymbolNoivern_Half_Deck.png",
-  "TK7A":
-    "https://archives.bulbagarden.net/media/upload/thumb/a/a5/SetSymbolBisharp_Half_Deck.png/30px-SetSymbolBisharp_Half_Deck.png",
-  "TK7B":
-    "https://archives.bulbagarden.net/media/upload/thumb/3/3f/SetSymbolWigglytuff_Half_Deck.png/30px-SetSymbolWigglytuff_Half_Deck.png",
-  "TK8A":
-    "https://archives.bulbagarden.net/media/upload/thumb/c/cf/SetSymbolLatias_XY_Half_Deck.png/30px-SetSymbolLatias_XY_Half_Deck.png",
-  "TK8O":
-    "https://archives.bulbagarden.net/media/upload/thumb/8/8a/SetSymbolLatios_XY_Half_Deck.png/30px-SetSymbolLatios_XY_Half_Deck.png",
-  "TK9P":
-    "https://archives.bulbagarden.net/media/upload/thumb/7/79/SetSymbolPikachu_Libre_Half_Deck.png/30px-SetSymbolPikachu_Libre_Half_Deck.png",
-  "TK9S":
-    "https://archives.bulbagarden.net/media/upload/thumb/9/90/SetSymbolSuicune_Half_Deck.png/30px-SetSymbolSuicune_Half_Deck.png",
-  "TK10A":
+  TK5E: "https://archives.bulbagarden.net/media/upload/thumb/1/1f/SetSymbolExcadrill_Half_Deck.png/30px-SetSymbolExcadrill_Half_Deck.png",
+  TK5Z: "https://archives.bulbagarden.net/media/upload/thumb/0/01/SetSymbolZoroark_Half_Deck.png/30px-SetSymbolZoroark_Half_Deck.png",
+  TK6S: "https://archives.bulbagarden.net/media/upload/thumb/4/46/SetSymbolSylveon_Half_Deck.png/30px-SetSymbolSylveon_Half_Deck.png",
+  TK6N: "https://archives.bulbagarden.net/media/upload/thumb/3/38/SetSymbolNoivern_Half_Deck.png/30px-SetSymbolNoivern_Half_Deck.png",
+  TK7A: "https://archives.bulbagarden.net/media/upload/thumb/a/a5/SetSymbolBisharp_Half_Deck.png/30px-SetSymbolBisharp_Half_Deck.png",
+  TK7B: "https://archives.bulbagarden.net/media/upload/thumb/3/3f/SetSymbolWigglytuff_Half_Deck.png/30px-SetSymbolWigglytuff_Half_Deck.png",
+  TK8A: "https://archives.bulbagarden.net/media/upload/thumb/c/cf/SetSymbolLatias_XY_Half_Deck.png/30px-SetSymbolLatias_XY_Half_Deck.png",
+  TK8O: "https://archives.bulbagarden.net/media/upload/thumb/8/8a/SetSymbolLatios_XY_Half_Deck.png/30px-SetSymbolLatios_XY_Half_Deck.png",
+  TK9P: "https://archives.bulbagarden.net/media/upload/thumb/7/79/SetSymbolPikachu_Libre_Half_Deck.png/30px-SetSymbolPikachu_Libre_Half_Deck.png",
+  TK9S: "https://archives.bulbagarden.net/media/upload/thumb/9/90/SetSymbolSuicune_Half_Deck.png/30px-SetSymbolSuicune_Half_Deck.png",
+  TK10A:
     "https://archives.bulbagarden.net/media/upload/thumb/b/ba/SetSymbolAlolan_Raichu_Half_Deck.png/30px-SetSymbolAlolan_Raichu_Half_Deck.png",
-  "TK10L":
+  TK10L:
     "https://archives.bulbagarden.net/media/upload/thumb/a/a7/SetSymbolLycanroc_Half_Deck.png/30px-SetSymbolLycanroc_Half_Deck.png",
 };
 
@@ -132,7 +122,7 @@ for (const [code, url] of Object.entries(tkSetSymbols)) {
 async function writeCache(from: string, to: string) {
   if (fs.existsSync(to)) return;
   console.log(to);
-  await Bun.write(to, await fetch(from).then(r => r.arrayBuffer()));
+  await Bun.write(to, await fetch(from).then((r) => r.arrayBuffer()));
 }
 
 function convertMWThumb(url: string) {

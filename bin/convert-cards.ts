@@ -40,8 +40,7 @@ for (const locale of locales) {
       // avifenc only supports piping in from stdin if the file is .y4m (a video format)
       // mkfifo doesn't work. tmpfs recommended so everything still runs in memory
       await $`magick convert ${inputFile} -alpha off ${alphalessFile}`.quiet();
-      await $`avifenc -q 30 --speed 1 --premultiply --jobs all -y 420 ${alphalessFile} ${outputFile}`
-        .quiet();
+      await $`avifenc -q 30 --speed 1 --premultiply --jobs all -y 420 ${alphalessFile} ${outputFile}`.quiet();
     }
   }
 }

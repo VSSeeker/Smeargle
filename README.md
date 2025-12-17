@@ -10,4 +10,4 @@ Powered by malie.io (which sources data from PTCGO and PTCGL), Bulbapedia, and [
 
 - Bun
 - ImageMagick
-- avifenc
+- avifenc (libavif)

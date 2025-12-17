@@ -36,8 +36,7 @@ for (const code of setCodes) {
     console.log(symbolFile);
     await fs.promises.mkdir(outputDir, { recursive: true });
     try {
-      await $`avifenc -q 30 --speed 1 --premultiply --jobs all -y 420 ${symbolFile} ${symbolOutput}`
-        .quiet();
+      await $`avifenc -q 30 --speed 1 --premultiply --jobs all -y 420 ${symbolFile} ${symbolOutput}`.quiet();
     } catch (e) {
       console.error(e);
     }

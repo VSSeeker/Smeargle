@@ -48,7 +48,10 @@ for (const locale of locales) {
     while (attempt < maxAttempts) {
       attempt += 1;
       try {
-        await Bun.write(cacheFileName, await fetch(downloadUrl as string).then(r => r.arrayBuffer()));
+        await Bun.write(
+          cacheFileName,
+          await fetch(downloadUrl as string).then((r) => r.arrayBuffer()),
+        );
         break;
       } catch (e) {
         if (attempt === maxAttempts) throw e;
