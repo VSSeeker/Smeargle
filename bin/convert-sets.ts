@@ -28,6 +28,7 @@ const dimensions: Record<string, { width: number; height: number }> = {};
 const setCodes = fs.readdirSync(setsCachePath);
 
 for (const code of setCodes) {
+  if (code === ".DS_Store") continue;
   console.log(code);
 
   const logoFile = path.join(setsCachePath, code, "logo.png");
