@@ -15,7 +15,7 @@ import * as fs from "fs";
 import { locales } from "./locales";
 import imageUrls from "./malieimages.json";
 import foilUrls from "./maliefoils.json";
-import { assetsPath, cachePath } from "./paths";
+import { assetsPath, cachePath } from "./lib/paths";
 
 const OVERRIDE_CARDS = process.env.OVERRIDE_CARDS === "1";
 const DOWNLOAD_EXISTING_CARDS = process.env.DOWNLOAD_EXISTING_CARDS === "1";
@@ -34,10 +34,7 @@ await downloadCards(foilUrls, "foils");
  * @param urlMap - Mapping of "set/cardNum" => "downloadUrl"
  * @param cacheSubdir - Cache subdirectory (e.g., "cards" or "foils")
  */
-async function downloadCards(
-  urlMap: Record<string, unknown>,
-  cacheSubdir: string,
-) {
+async function downloadCards(urlMap: Record<string, unknown>, cacheSubdir: string) {
   const sets = new Set<string>();
 
   for (const [cardPath, downloadUrl] of Object.entries(urlMap)) {
@@ -46,12 +43,7 @@ async function downloadCards(
     // Skip if already formatted in assets (unless DOWNLOAD_EXISTING_CARDS is set)
     // Check only once per card, not per locale
     if (!DOWNLOAD_EXISTING_CARDS) {
-      const firstLocaleAssetPath = path.join(
-        assetsPath,
-        locales[0],
-        set,
-        `${cardNum}.avif`,
-      );
+      const firstLocaleAssetPath = path.join(assetsPath, locales[0], set, `${cardNum}.avif`);
       if (fs.existsSync(firstLocaleAssetPath)) {
         console.log(`${cardPath} already formatted [Skipped all locales]`);
         continue;

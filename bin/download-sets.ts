@@ -13,7 +13,7 @@
 import { load as cheerioLoad } from "cheerio";
 import * as fs from "fs";
 import * as path from "path";
-import { cachePath } from "./paths";
+import { cachePath } from "./lib/paths";
 
 const locale = "en-US";
 const setsCachePath = path.join(cachePath, "sets", locale);
