@@ -72,16 +72,17 @@ async function downloadCards(urlMap: Record<string, unknown>, cacheSubdir: strin
 
       console.log(`${setStatusText}`);
 
-      // Retry logic for network failures
+      // Retry logic for network failures (30s timeout, 3 retries)
       let attempt = 0;
-      const maxAttempts = 5;
+      const maxAttempts = 3;
+      const timeoutMs = 30000;
       while (attempt < maxAttempts) {
         attempt += 1;
         try {
-          await Bun.write(
-            cacheFileName,
-            await fetch(downloadUrl as string).then((r) => r.arrayBuffer()),
-          );
+          const response = await fetch(downloadUrl as string, {
+            signal: AbortSignal.timeout(timeoutMs),
+          });
+          await Bun.write(cacheFileName, await response.arrayBuffer());
           break;
         } catch (e) {
           if (attempt === maxAttempts) throw e;
