@@ -14,10 +14,9 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { $ } from "zx";
 import { locales } from "./locales";
 import { cachePath, tmpPath } from "./lib/paths";
-import { waitForFile } from "./lib/convert";
+import { waitForFile, fileExists, removeAlpha, convertToAvif } from "./lib/convert";
 
 const cardsDir = path.join(cachePath, "cards");
 const alphalessFile = path.join(tmpPath, "alphaless.png");
@@ -50,10 +49,9 @@ for (const locale of locales) {
       const outputFile = path.join(outputDir, `${cardName}.avif`);
 
       // Skip if already converted
-      try {
-        await fs.promises.access(outputFile);
+      if (fileExists(outputFile)) {
         continue;
-      } catch {}
+      }
 
       console.log(`[${locale}] ${setId} ${cardName}`);
 
@@ -90,8 +88,8 @@ async function convertCardWithRetry(inputFile: string, outputFile: string): Prom
 
       // Remove alpha layer from input file, then encode to AVIF
       // avifenc only supports piping from stdin for .y4m files, so we use a temp file
-      await $`magick convert ${inputFile} -alpha off ${alphalessFile}`.quiet();
-      await $`avifenc -q 30 --speed 1 --premultiply --jobs all -y 420 ${alphalessFile} ${outputFile}`.quiet();
+      await removeAlpha(inputFile, alphalessFile);
+      await convertToAvif(alphalessFile, outputFile);
 
       return;
     } catch (e) {

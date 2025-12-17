@@ -16,9 +16,12 @@ import * as fs from "fs";
 export async function convertToAvif(
   inputFile: string,
   outputFile: string,
-  quality: number = 30,
+  quality: number = 20,
 ): Promise<void> {
-  await $`avifenc -q ${quality} --speed 1 --premultiply --jobs all -y 420 ${inputFile} ${outputFile}`.quiet();
+  // Map 0-100 quality to 63-0 quantizer (0 is lossless, 63 is worst)
+  // Formula: 63 - (quality * 63 / 100)
+  const quantizer = Math.round(63 - (quality * 63) / 100);
+  await $`avifenc --max ${quantizer} --speed 1 --premultiply -y 420 ${inputFile} ${outputFile}`.quiet();
 }
 
 /**
@@ -70,4 +73,14 @@ export async function waitForFile(
   }
 
   return false;
+}
+
+/**
+ * Remove alpha channel from an image using ImageMagick
+ *
+ * @param inputFile - Path to source image file
+ * @param outputFile - Path to output image file
+ */
+export async function removeAlpha(inputFile: string, outputFile: string): Promise<void> {
+  await $`magick convert ${inputFile} -alpha off ${outputFile}`.quiet();
 }
