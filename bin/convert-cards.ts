@@ -1,72 +1,210 @@
 /**
  * Convert Pokémon TCG card images from PNG to AVIF format
  *
- * This script processes cached card images and converts them to optimized AVIF
- * format for use in the application. It removes alpha channels and applies
- * compression to reduce file size while maintaining quality.
+ * This script processes cached regular card and foil images and converts them
+ * to optimized AVIF format for use in the application. It removes alpha
+ * channels and applies compression to reduce file size while maintaining
+ * quality.
  *
  * Features:
  * - Skips already converted files
- * - Waits for source files to exist (supports simultaneous download + convert)
+ * - Polls for newly downloaded files (supports simultaneous download + convert)
  * - Retries failed conversions once with delay
  * - Processes cards in numerical order
  */
 
 import * as fs from "fs";
 import * as path from "path";
-import { locales } from "./locales";
-import { cachePath, tmpPath } from "./lib/paths";
-import { waitForFile, fileExists, removeAlpha, convertToAvif } from "./lib/convert";
+import { convertToAvif, fileExists, removeAlpha, waitForFile } from "./lib/convert";
+import { assetsPath, cachePath, tmpPath } from "./lib/paths";
 
-const cardsDir = path.join(cachePath, "cards");
-const alphalessFile = path.join(tmpPath, "alphaless.png");
+type CardCacheKind = {
+  cacheSubdir: "cards" | "foils";
+  label: string;
+  outputSubdir?: string;
+};
+
+type CachedCardFile = {
+  inputFile: string;
+  locale: string;
+  setId: string;
+  cardName: string;
+};
+
+const cardCacheKinds: CardCacheKind[] = [
+  { cacheSubdir: "cards", label: "card" },
+  { cacheSubdir: "foils", label: "foil", outputSubdir: "foils" },
+];
+
+const initialCacheWaitMs = 5000;
+const idleTimeoutMs = 5000;
+const pollIntervalMs = 500;
+const activeDownloadMarkerMaxAgeMs = 2 * 60 * 60 * 1000;
 
 await fs.promises.mkdir(tmpPath, { recursive: true });
 
 // ============================================================================
-// Process all locales and sets
+// Process cached regular and foil images
 // ============================================================================
 
-for (const locale of locales) {
-  const localeDir = path.join(cardsDir, locale);
-  const setIds = await fs.promises.readdir(localeDir);
-
-  for (const setId of setIds) {
-    const setDir = path.join(localeDir, setId);
-    const setFiles = await fs.promises.readdir(setDir);
-    const outputDir = path.resolve("assets/", locale, setId);
-
-    await fs.promises.mkdir(outputDir, { recursive: true });
-
-    // Sort files numerically by card number
-    const filesOrdered = setFiles.sort(
-      (a, b) => Number(a.replace(/[^\d]/g, "")) - Number(b.replace(/[^\d]/g, "")),
-    );
-
-    for (const file of filesOrdered) {
-      const cardName = path.basename(file, ".png");
-      const inputFile = path.join(setDir, file);
-      const outputFile = path.join(outputDir, `${cardName}.avif`);
-
-      // Skip if already converted
-      if (fileExists(outputFile)) {
-        continue;
-      }
-
-      console.log(`[${locale}] ${setId} ${cardName}`);
-
-      // Wait for source file and convert with retry
-      await convertCardWithRetry(inputFile, outputFile);
-    }
-  }
-}
+await convertCachedCards();
 
 // ============================================================================
 // Helper functions
 // ============================================================================
 
+async function convertCachedCards(): Promise<void> {
+  const cacheRoots = cardCacheKinds.map((cacheKind) => getCacheRoot(cacheKind));
+  const hasCacheRoot = await waitForAnyDirectory(cacheRoots, initialCacheWaitMs);
+  if (!hasCacheRoot) {
+    console.warn(`No card cache directories found in ${cachePath}`);
+    return;
+  }
+
+  const processedFiles = new Set<string>();
+  let lastActivityAt = Date.now();
+
+  while (true) {
+    let convertedInPass = false;
+
+    for (const cacheKind of cardCacheKinds) {
+      const cachedFiles = await listCachedCardFiles(getCacheRoot(cacheKind));
+
+      for (const cachedFile of cachedFiles) {
+        const processedKey = `${cacheKind.cacheSubdir}:${cachedFile.inputFile}`;
+        if (processedFiles.has(processedKey)) continue;
+
+        const outputFile = getOutputFile(cacheKind, cachedFile);
+        if (fileExists(outputFile)) {
+          processedFiles.add(processedKey);
+          continue;
+        }
+
+        await fs.promises.mkdir(path.dirname(outputFile), { recursive: true });
+        console.log(
+          `[${cachedFile.locale}] ${cachedFile.setId} ${cachedFile.cardName} ${cacheKind.label}`,
+        );
+
+        await convertCardWithRetry(cachedFile.inputFile, outputFile);
+        processedFiles.add(processedKey);
+        convertedInPass = true;
+      }
+    }
+
+    if (convertedInPass) {
+      lastActivityAt = Date.now();
+      continue;
+    }
+
+    if (await hasActiveDownloads()) {
+      lastActivityAt = Date.now();
+      await sleep(pollIntervalMs);
+      continue;
+    }
+
+    if (Date.now() - lastActivityAt >= idleTimeoutMs) break;
+
+    await sleep(pollIntervalMs);
+  }
+}
+
+async function listCachedCardFiles(cacheRoot: string): Promise<CachedCardFile[]> {
+  const cachedFiles: CachedCardFile[] = [];
+  const localeEntries = await readDirEntries(cacheRoot);
+
+  for (const localeEntry of localeEntries) {
+    if (!localeEntry.isDirectory()) continue;
+
+    const locale = localeEntry.name;
+    const localeDir = path.join(cacheRoot, locale);
+    const setEntries = await readDirEntries(localeDir);
+
+    for (const setEntry of setEntries) {
+      if (!setEntry.isDirectory()) continue;
+
+      const setId = setEntry.name;
+      const setDir = path.join(localeDir, setId);
+      const fileEntries = await readDirEntries(setDir);
+
+      for (const fileEntry of fileEntries) {
+        if (!fileEntry.isFile() || !fileEntry.name.endsWith(".png")) continue;
+
+        cachedFiles.push({
+          inputFile: path.join(setDir, fileEntry.name),
+          locale,
+          setId,
+          cardName: path.basename(fileEntry.name, ".png"),
+        });
+      }
+    }
+  }
+
+  return cachedFiles.sort(compareCachedCards);
+}
+
+async function readDirEntries(dir: string): Promise<fs.Dirent[]> {
+  try {
+    return await fs.promises.readdir(dir, { withFileTypes: true });
+  } catch (error) {
+    if (isNodeError(error) && error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+function compareCachedCards(a: CachedCardFile, b: CachedCardFile): number {
+  return (
+    a.locale.localeCompare(b.locale) ||
+    a.setId.localeCompare(b.setId) ||
+    compareCardName(a.cardName, b.cardName)
+  );
+}
+
+function compareCardName(a: string, b: string): number {
+  const aNumber = Number(a.replace(/[^\d]/g, ""));
+  const bNumber = Number(b.replace(/[^\d]/g, ""));
+
+  if (!Number.isNaN(aNumber) && !Number.isNaN(bNumber) && aNumber !== bNumber) {
+    return aNumber - bNumber;
+  }
+
+  return a.localeCompare(b, undefined, { numeric: true });
+}
+
+function getCacheRoot(cacheKind: CardCacheKind): string {
+  return path.join(cachePath, cacheKind.cacheSubdir);
+}
+
+async function hasActiveDownloads(): Promise<boolean> {
+  for (const cacheKind of cardCacheKinds) {
+    const cacheRoot = getCacheRoot(cacheKind);
+    const rootEntries = await readDirEntries(cacheRoot);
+
+    for (const rootEntry of rootEntries) {
+      if (!rootEntry.isFile() || !rootEntry.name.startsWith(".download-active.")) continue;
+
+      const markerPath = path.join(cacheRoot, rootEntry.name);
+      const markerAgeMs = await fs.promises
+        .stat(markerPath)
+        .then((stat) => Date.now() - stat.mtimeMs)
+        .catch(() => Number.POSITIVE_INFINITY);
+
+      if (markerAgeMs < activeDownloadMarkerMaxAgeMs) return true;
+    }
+  }
+
+  return false;
+}
+
+function getOutputFile(cacheKind: CardCacheKind, cachedFile: CachedCardFile): string {
+  const outputDir = cacheKind.outputSubdir
+    ? path.join(assetsPath, cachedFile.locale, cachedFile.setId, cacheKind.outputSubdir)
+    : path.join(assetsPath, cachedFile.locale, cachedFile.setId);
+
+  return path.join(outputDir, `${cachedFile.cardName}.avif`);
+}
+
 /**
- * Convert a card from PNG to AVIF with retry logic
+ * Convert a card from PNG to AVIF with retry logic.
  *
  * Waits for the source file to exist (up to 5s) to support simultaneous
  * download + convert operations. Retries once after 5s delay on failure.
@@ -81,24 +219,68 @@ async function convertCardWithRetry(inputFile: string, outputFile: string): Prom
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       // Wait for source file to exist (supports simultaneous download + convert)
-      const fileExists = await waitForFile(inputFile);
-      if (!fileExists) {
+      const sourceFileExists = await waitForFile(inputFile);
+      if (!sourceFileExists) {
         throw new Error(`Source file does not exist: ${inputFile}`);
       }
 
-      // Remove alpha layer from input file, then encode to AVIF
-      // avifenc only supports piping from stdin for .y4m files, so we use a temp file
-      await removeAlpha(inputFile, alphalessFile);
-      await convertToAvif(alphalessFile, outputFile);
+      // Remove alpha layer from input file, then encode to AVIF.
+      const alphalessFile = getTempFile(outputFile, ".png");
+      const temporaryOutputFile = getTempFile(outputFile, ".avif");
+
+      try {
+        await removeAlpha(inputFile, alphalessFile);
+        await convertToAvif(alphalessFile, temporaryOutputFile);
+        await fs.promises.rename(temporaryOutputFile, outputFile);
+      } finally {
+        await fs.promises.unlink(alphalessFile).catch(() => {});
+        await fs.promises.unlink(temporaryOutputFile).catch(() => {});
+      }
 
       return;
     } catch (e) {
       if (attempt < maxAttempts) {
         console.error(`Failed, retrying in ${retryDelayMs}ms...`);
-        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+        await sleep(retryDelayMs);
       } else {
         throw e;
       }
     }
   }
+}
+
+function getTempFile(outputFile: string, extension: string): string {
+  return path.join(
+    tmpPath,
+    `${path.basename(outputFile, ".avif")}.${process.pid}.${Date.now()}.${Math.random()
+      .toString(36)
+      .slice(2)}${extension}`,
+  );
+}
+
+async function waitForAnyDirectory(dirs: string[], timeoutMs: number): Promise<boolean> {
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < timeoutMs) {
+    for (const dir of dirs) {
+      const isDirectory = await fs.promises
+        .stat(dir)
+        .then((stat) => stat.isDirectory())
+        .catch(() => false);
+
+      if (isDirectory) return true;
+    }
+
+    await sleep(pollIntervalMs);
+  }
+
+  return false;
+}
+
+function isNodeError(error: unknown): error is Error & { code: string } {
+  return error instanceof Error && "code" in error;
+}
+
+async function sleep(ms: number): Promise<void> {
+  await new Promise((resolve) => setTimeout(resolve, ms));
 }

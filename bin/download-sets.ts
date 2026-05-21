@@ -13,18 +13,26 @@
 import { load as cheerioLoad } from "cheerio";
 import * as fs from "fs";
 import * as path from "path";
+import { downloadFile, fetchText } from "./lib/download";
 import { cachePath } from "./lib/paths";
 
 const locale = "en-US";
 const setsCachePath = path.join(cachePath, "sets", locale);
+const downloadMarker = path.join(setsCachePath, `.download-active.${process.pid}`);
+
+await fs.promises.mkdir(setsCachePath, { recursive: true });
+await Bun.write(downloadMarker, `${process.pid}\n`);
+process.on("exit", () => {
+  fs.rmSync(downloadMarker, { force: true });
+});
 
 // ============================================================================
 // Fetch and parse Bulbapedia expansions page
 // ============================================================================
 
-const setsPage = await fetch(
+const setsPage = await fetchText(
   "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_Trading_Card_Game_expansions",
-).then((r) => r.text());
+);
 
 const $sets = cheerioLoad(setsPage);
 
@@ -161,6 +169,8 @@ for (const [code, url] of Object.entries(tkSetSymbols)) {
   }
 }
 
+await fs.promises.unlink(downloadMarker).catch(() => {});
+
 // ============================================================================
 // Helper functions
 // ============================================================================
@@ -171,7 +181,7 @@ for (const [code, url] of Object.entries(tkSetSymbols)) {
 async function writeCache(from: string, to: string) {
   if (fs.existsSync(to)) return;
   console.log(to);
-  await Bun.write(to, await fetch(from).then((r) => r.arrayBuffer()));
+  await downloadFile(from, to);
 }
 
 /**

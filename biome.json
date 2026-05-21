@@ -6,6 +6,7 @@
       "**/*.{json,jsonc}",
       "**/*.md",
       "!!**/assets/**",
+      "!!**/.claude/**",
       "!!**/out/**",
       "!!**/bin/malieimages.json",
       "!!**/bun.lock"

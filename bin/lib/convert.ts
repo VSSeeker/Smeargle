@@ -2,7 +2,7 @@
  * Shared conversion utilities for image processing
  */
 
-import { $ } from "zx";
+import { $ } from "bun";
 import * as fs from "fs";
 
 /**
@@ -33,8 +33,8 @@ export async function convertToAvif(
 export async function getImageDimensions(
   imagePath: string,
 ): Promise<{ width: number; height: number }> {
-  const dim = await $`magick identify -format "%wx%h" ${imagePath}`.quiet();
-  const [width, height] = dim.stdout.trim().split("x").map(Number);
+  const dim = await $`magick identify -format "%wx%h" ${imagePath}`.quiet().text();
+  const [width, height] = dim.trim().split("x").map(Number);
   return { width, height };
 }
 
