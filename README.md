@@ -11,3 +11,17 @@ Powered by malie.io (which sources data from PTCGO and PTCGL), Bulbapedia, and [
 - Bun
 - ImageMagick
 - avifenc (libavif)
+
+## Card image selectors
+
+Card downloads and conversions process regular cards and foils by default. Pass a selector to
+process only one kind:
+
+```bash
+bun run download-cards:cards
+bun run download-cards:foils
+bun run convert-cards:cards
+bun run convert-cards:foils
+```
+
+The underlying scripts also accept `--cards` or `--foils` directly.

@@ -7,6 +7,10 @@
  * Environment variables:
  * - OVERRIDE_CARDS=1: Re-download cards even if already in cache
  * - DOWNLOAD_EXISTING_CARDS=1: Download cards even if already in assets
+ *
+ * Options:
+ * - --cards: Download regular cards only
+ * - --foils: Download foils only
  */
 
 import * as fs from "fs";
@@ -15,15 +19,24 @@ import * as path from "path";
 import { locales } from "./locales";
 import imageUrls from "./malieimages.json";
 import foilUrls from "./maliefoils.json";
+import { parseCardImageKinds } from "./lib/card-selection";
 import { assetsPath, cachePath } from "./lib/paths";
 import { downloadFile } from "./lib/download";
 
 const OVERRIDE_CARDS = process.env.OVERRIDE_CARDS === "1";
 const DOWNLOAD_EXISTING_CARDS = process.env.DOWNLOAD_EXISTING_CARDS === "1";
+const selectedCardImageKinds = parseCardImageKinds({
+  args: Bun.argv.slice(2),
+  command: "bun ./bin/download-cards-malie.ts",
+});
 
-// Download regular cards first, then foils
-await downloadCards(imageUrls, "cards");
-await downloadCards(foilUrls, "foils");
+for (const cardImageKind of selectedCardImageKinds) {
+  if (cardImageKind === "cards") {
+    await downloadCards(imageUrls, "cards");
+  } else {
+    await downloadCards(foilUrls, "foils");
+  }
+}
 
 // ============================================================================
 // Helper functions

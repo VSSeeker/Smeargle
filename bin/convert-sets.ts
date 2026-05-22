@@ -14,7 +14,12 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { convertToAvif, fileExists, getImageDimensions } from "./lib/convert";
+import {
+  convertToAvif,
+  fileExists,
+  getImageDimensions,
+  transparentAssetAvifOptions,
+} from "./lib/convert";
 import { assetsPath, cachePath, outPath, tmpPath } from "./lib/paths";
 
 type SetAssetPaths = {
@@ -155,7 +160,7 @@ async function convertSetAsset(inputFile: string, outputFile: string): Promise<v
   const temporaryOutputFile = getTempFile(outputFile);
 
   try {
-    await convertToAvif(inputFile, temporaryOutputFile);
+    await convertToAvif(inputFile, temporaryOutputFile, transparentAssetAvifOptions);
     await fs.promises.rename(temporaryOutputFile, outputFile);
   } finally {
     await fs.promises.unlink(temporaryOutputFile).catch(() => {});

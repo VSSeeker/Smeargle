@@ -5,23 +5,94 @@
 import { $ } from "bun";
 import * as fs from "fs";
 
+type AvifYuvFormat = "auto" | "444" | "422" | "420" | "400";
+
+export type AvifOptions = {
+  quality?: number;
+  alphaQuality?: number;
+  speed?: number;
+  yuv?: AvifYuvFormat;
+  premultiply?: boolean;
+  sharpYuv?: boolean;
+  stripMetadata?: boolean;
+};
+
+export const cardAvifOptions: AvifOptions = {
+  quality: 40,
+  speed: 4,
+  yuv: "420",
+  sharpYuv: true,
+  stripMetadata: true,
+};
+
+export const transparentAssetAvifOptions: AvifOptions = {
+  quality: 55,
+  alphaQuality: 95,
+  speed: 4,
+  yuv: "444",
+  premultiply: true,
+  stripMetadata: true,
+};
+
+export const foilMaskAvifOptions: AvifOptions = {
+  quality: 55,
+  speed: 4,
+  yuv: "400",
+  stripMetadata: true,
+};
+
 /**
  * Convert an image to AVIF format
  *
  * @param inputFile - Path to source image file
  * @param outputFile - Path to output AVIF file
- * @param quality - AVIF quality (0-100, default 30)
+ * @param options - AVIF encoder options
  * @throws Error if conversion fails
  */
 export async function convertToAvif(
   inputFile: string,
   outputFile: string,
-  quality: number = 20,
+  options: AvifOptions = {},
 ): Promise<void> {
-  // Map 0-100 quality to 63-0 quantizer (0 is lossless, 63 is worst)
-  // Formula: 63 - (quality * 63 / 100)
-  const quantizer = Math.round(63 - (quality * 63) / 100);
-  await $`avifenc --max ${quantizer} --speed 1 --premultiply -y 420 ${inputFile} ${outputFile}`.quiet();
+  const {
+    quality = 40,
+    alphaQuality,
+    speed = 4,
+    yuv = "auto",
+    premultiply = false,
+    sharpYuv = false,
+    stripMetadata = false,
+  } = options;
+
+  const args = [
+    "avifenc",
+    "-q",
+    String(quality),
+    "--speed",
+    String(speed),
+    "-y",
+    yuv,
+  ];
+
+  if (alphaQuality !== undefined) {
+    args.push("--qalpha", String(alphaQuality));
+  }
+
+  if (premultiply) {
+    args.push("--premultiply");
+  }
+
+  if (sharpYuv && yuv === "420") {
+    args.push("--sharpyuv");
+  }
+
+  if (stripMetadata) {
+    args.push("--ignore-exif", "--ignore-xmp");
+  }
+
+  args.push(inputFile, outputFile);
+
+  await runCommand(args);
 }
 
 /**
@@ -83,4 +154,30 @@ export async function waitForFile(
  */
 export async function removeAlpha(inputFile: string, outputFile: string): Promise<void> {
   await $`magick convert ${inputFile} -alpha off ${outputFile}`.quiet();
+}
+
+/**
+ * Extract the green-channel foil texture into a single-channel PNG mask.
+ *
+ * @param inputFile - Path to source foil PNG file
+ * @param outputFile - Path to output grayscale PNG file
+ */
+export async function extractFoilMask(inputFile: string, outputFile: string): Promise<void> {
+  await $`magick ${inputFile} -alpha off -channel G -separate ${outputFile}`.quiet();
+}
+
+async function runCommand(args: string[]): Promise<void> {
+  const proc = Bun.spawn(args, {
+    stdout: "ignore",
+    stderr: "pipe",
+  });
+
+  const [exitCode, stderr] = await Promise.all([
+    proc.exited,
+    new Response(proc.stderr).text(),
+  ]);
+
+  if (exitCode !== 0) {
+    throw new Error(`${args[0]} failed with exit code ${exitCode}: ${stderr.trim()}`);
+  }
 }

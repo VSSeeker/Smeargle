@@ -2,20 +2,34 @@
  * Convert Pokémon TCG card images from PNG to AVIF format
  *
  * This script processes cached regular card and foil images and converts them
- * to optimized AVIF format for use in the application. It removes alpha
- * channels and applies compression to reduce file size while maintaining
- * quality.
+ * to optimized AVIF format for use in the application. Regular cards are
+ * encoded as card faces, while foils are converted to grayscale masks from
+ * their green-channel texture.
  *
  * Features:
  * - Skips already converted files
  * - Polls for newly downloaded files (supports simultaneous download + convert)
  * - Retries failed conversions once with delay
  * - Processes cards in numerical order
+ *
+ * Options:
+ * - --cards: Convert regular cards only
+ * - --foils: Convert foils only
  */
 
 import * as fs from "fs";
 import * as path from "path";
-import { convertToAvif, fileExists, removeAlpha, waitForFile } from "./lib/convert";
+import { parseCardImageKinds } from "./lib/card-selection";
+import {
+  cardAvifOptions,
+  convertToAvif,
+  extractFoilMask,
+  fileExists,
+  foilMaskAvifOptions,
+  removeAlpha,
+  waitForFile,
+} from "./lib/convert";
+import { writeSmeargleManifest } from "./lib/manifest";
 import { assetsPath, cachePath, tmpPath } from "./lib/paths";
 
 type CardCacheKind = {
@@ -35,6 +49,13 @@ const cardCacheKinds: CardCacheKind[] = [
   { cacheSubdir: "cards", label: "card" },
   { cacheSubdir: "foils", label: "foil", outputSubdir: "foils" },
 ];
+const selectedCardImageKinds = parseCardImageKinds({
+  args: Bun.argv.slice(2),
+  command: "bun ./bin/convert-cards.ts",
+});
+const selectedCardCacheKinds = cardCacheKinds.filter((cacheKind) =>
+  selectedCardImageKinds.includes(cacheKind.cacheSubdir),
+);
 
 const initialCacheWaitMs = 5000;
 const idleTimeoutMs = 5000;
@@ -48,13 +69,14 @@ await fs.promises.mkdir(tmpPath, { recursive: true });
 // ============================================================================
 
 await convertCachedCards();
+await writeSmeargleManifest();
 
 // ============================================================================
 // Helper functions
 // ============================================================================
 
 async function convertCachedCards(): Promise<void> {
-  const cacheRoots = cardCacheKinds.map((cacheKind) => getCacheRoot(cacheKind));
+  const cacheRoots = selectedCardCacheKinds.map((cacheKind) => getCacheRoot(cacheKind));
   const hasCacheRoot = await waitForAnyDirectory(cacheRoots, initialCacheWaitMs);
   if (!hasCacheRoot) {
     console.warn(`No card cache directories found in ${cachePath}`);
@@ -67,7 +89,7 @@ async function convertCachedCards(): Promise<void> {
   while (true) {
     let convertedInPass = false;
 
-    for (const cacheKind of cardCacheKinds) {
+    for (const cacheKind of selectedCardCacheKinds) {
       const cachedFiles = await listCachedCardFiles(getCacheRoot(cacheKind));
 
       for (const cachedFile of cachedFiles) {
@@ -85,7 +107,7 @@ async function convertCachedCards(): Promise<void> {
           `[${cachedFile.locale}] ${cachedFile.setId} ${cachedFile.cardName} ${cacheKind.label}`,
         );
 
-        await convertCardWithRetry(cachedFile.inputFile, outputFile);
+        await convertCardWithRetry(cacheKind, cachedFile.inputFile, outputFile);
         processedFiles.add(processedKey);
         convertedInPass = true;
       }
@@ -175,7 +197,7 @@ function getCacheRoot(cacheKind: CardCacheKind): string {
 }
 
 async function hasActiveDownloads(): Promise<boolean> {
-  for (const cacheKind of cardCacheKinds) {
+  for (const cacheKind of selectedCardCacheKinds) {
     const cacheRoot = getCacheRoot(cacheKind);
     const rootEntries = await readDirEntries(cacheRoot);
 
@@ -212,7 +234,11 @@ function getOutputFile(cacheKind: CardCacheKind, cachedFile: CachedCardFile): st
  * @param inputFile - Path to source PNG file
  * @param outputFile - Path to output AVIF file
  */
-async function convertCardWithRetry(inputFile: string, outputFile: string): Promise<void> {
+async function convertCardWithRetry(
+  cacheKind: CardCacheKind,
+  inputFile: string,
+  outputFile: string,
+): Promise<void> {
   const maxAttempts = 2;
   const retryDelayMs = 5000;
 
@@ -224,16 +250,21 @@ async function convertCardWithRetry(inputFile: string, outputFile: string): Prom
         throw new Error(`Source file does not exist: ${inputFile}`);
       }
 
-      // Remove alpha layer from input file, then encode to AVIF.
-      const alphalessFile = getTempFile(outputFile, ".png");
+      const intermediateFile = getTempFile(outputFile, ".png");
       const temporaryOutputFile = getTempFile(outputFile, ".avif");
 
       try {
-        await removeAlpha(inputFile, alphalessFile);
-        await convertToAvif(alphalessFile, temporaryOutputFile);
+        if (cacheKind.cacheSubdir === "foils") {
+          await extractFoilMask(inputFile, intermediateFile);
+          await convertToAvif(intermediateFile, temporaryOutputFile, foilMaskAvifOptions);
+        } else {
+          await removeAlpha(inputFile, intermediateFile);
+          await convertToAvif(intermediateFile, temporaryOutputFile, cardAvifOptions);
+        }
+
         await fs.promises.rename(temporaryOutputFile, outputFile);
       } finally {
-        await fs.promises.unlink(alphalessFile).catch(() => {});
+        await fs.promises.unlink(intermediateFile).catch(() => {});
         await fs.promises.unlink(temporaryOutputFile).catch(() => {});
       }
 
