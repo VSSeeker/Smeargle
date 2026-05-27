@@ -1,0 +1,39 @@
+{
+  "ptcgoCodeAliases": {
+    "ME": "MEG"
+  },
+  "slugAliases": {},
+  "nameAliases": {
+    "base": "BS",
+    "base set": "BS",
+    "scarlet and violet": "SVI",
+    "scarlet and violet energies": "SVE",
+    "sun and moon energies": "SMEnergy",
+    "sword and shield energies": "SWSHEnergy",
+    "pokemon go": "PGO",
+    "151": "MEW",
+    "mega evolution": "MEG",
+    "phantasmal flames": "PFL",
+    "ascended heroes": "ASC",
+    "perfect order": "POR",
+    "chaos rising": "CRI",
+    "black bolt": "BLK",
+    "white flare": "WHT",
+    "scarlet and violet black star promos": "SVP",
+    "swsh black star promos": "SWSHP",
+    "sm black star promos": "SMP",
+    "xy black star promos": "XYP",
+    "bw black star promos": "BWP",
+    "hgss black star promos": "HSP",
+    "nintendo black star promos": "NP",
+    "wizards black star promos": "WP"
+  },
+  "skipSlugs": [],
+  "skipNormalizedNames": [],
+  "skipNamePatterns": [
+    "\\bTrainer Gallery\\b",
+    "\\bGalarian Gallery\\b",
+    "\\bShiny Vault\\b",
+    "\\bClassic Collection\\b"
+  ]
+}

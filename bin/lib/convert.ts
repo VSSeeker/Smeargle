@@ -64,15 +64,7 @@ export async function convertToAvif(
     stripMetadata = false,
   } = options;
 
-  const args = [
-    "avifenc",
-    "-q",
-    String(quality),
-    "--speed",
-    String(speed),
-    "-y",
-    yuv,
-  ];
+  const args = ["avifenc", "-q", String(quality), "--speed", String(speed), "-y", yuv];
 
   if (alphaQuality !== undefined) {
     args.push("--qalpha", String(alphaQuality));
@@ -172,10 +164,7 @@ async function runCommand(args: string[]): Promise<void> {
     stderr: "pipe",
   });
 
-  const [exitCode, stderr] = await Promise.all([
-    proc.exited,
-    new Response(proc.stderr).text(),
-  ]);
+  const [exitCode, stderr] = await Promise.all([proc.exited, new Response(proc.stderr).text()]);
 
   if (exitCode !== 0) {
     throw new Error(`${args[0]} failed with exit code ${exitCode}: ${stderr.trim()}`);

@@ -36,10 +36,7 @@ export function buildSmeargleManifest(): SmeargleManifest {
     foils: Object.fromEntries(
       [...foils.entries()]
         .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-        .map(([setId, cardNames]) => [
-          setId,
-          [...cardNames].sort((a, b) => compareCardName(a, b)),
-        ]),
+        .map(([setId, cardNames]) => [setId, [...cardNames].sort((a, b) => compareCardName(a, b))]),
     ),
   };
 }

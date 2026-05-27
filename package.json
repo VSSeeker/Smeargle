@@ -16,6 +16,7 @@
     "download-cards:cards": "bun ./bin/download-cards-malie.ts --cards",
     "download-cards:foils": "bun ./bin/download-cards-malie.ts --foils",
     "download-sets": "bun ./bin/download-sets.ts",
+    "download-sets:pokesymbols": "bun ./bin/download-sets-pokesymbols.ts",
     "convert-cards": "bun ./bin/convert-cards.ts",
     "convert-cards:cards": "bun ./bin/convert-cards.ts --cards",
     "convert-cards:foils": "bun ./bin/convert-cards.ts --foils",

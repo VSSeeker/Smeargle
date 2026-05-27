@@ -1,0 +1,827 @@
+[
+  {
+    "slug": "mc-donalds-collection-2024",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2024",
+    "displayName": "McDonald's Collection 2024",
+    "releaseDate": "December 2024",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-dragon-discovery-2024.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/mcdonalds-collection-dragon-discovery-2024.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pokemon-trading-card-game-classic-blastoise",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pokemon-trading-card-game-classic-blastoise",
+    "displayName": "Pokémon Trading Card Game Classic (Blastoise)",
+    "releaseDate": "November 2023",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/classic-blastoise.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pokemon-trading-card-game-classic.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pokemon-trading-card-game-classic-charizard",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pokemon-trading-card-game-classic-charizard",
+    "displayName": "Pokémon Trading Card Game Classic (Charizard)",
+    "releaseDate": "November 2023",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/classic-charizard.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pokemon-trading-card-game-classic.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pokemon-trading-card-game-classic-venusaur",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pokemon-trading-card-game-classic-venusaur",
+    "displayName": "Pokémon Trading Card Game Classic (Venusaur)",
+    "releaseDate": "November 2023",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/classic-venusaur.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pokemon-trading-card-game-classic.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2023",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2023",
+    "displayName": "McDonald's Collection 2023",
+    "releaseDate": "July 2023",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2023.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/mcdonald_s-match-battle-2023.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "crown-zenith-galarian-gallery",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/crown-zenith-galarian-gallery",
+    "displayName": "Crown Zenith Galarian Gallery",
+    "releaseDate": "January 2023",
+    "ptcgoCode": "CRZ",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/crown-zenith.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/crown-zenith.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "silver-tempest-trainer-gallery",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/silver-tempest-trainer-gallery",
+    "displayName": "Silver Tempest Trainer Gallery",
+    "releaseDate": "November 2022",
+    "ptcgoCode": "SIT",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/silver-tempest.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/silver-tempest.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "lost-origin-trainer-gallery",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/lost-origin-trainer-gallery",
+    "displayName": "Lost Origin Trainer Gallery",
+    "releaseDate": "September 2022",
+    "ptcgoCode": "LOR",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/lost-origin.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/lost-origin.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2022",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2022",
+    "displayName": "McDonald's Collection 2022",
+    "releaseDate": "August 2022",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2022.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "astral-radiance-trainer-gallery",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/astral-radiance-trainer-gallery",
+    "displayName": "Astral Radiance Trainer Gallery",
+    "releaseDate": "May 2022",
+    "ptcgoCode": "ASR",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/astral-radiance.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/astral-radiance.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "brilliant-stars-trainer-gallery",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/brilliant-stars-trainer-gallery",
+    "displayName": "Brilliant Stars Trainer Gallery",
+    "releaseDate": "February 2022",
+    "ptcgoCode": "BRS",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/brilliant-stars.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/brilliant-stars.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "celebrations-classic-collection",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/celebrations-classic-collection",
+    "displayName": "Celebrations: Classic Collection",
+    "releaseDate": "October 2021",
+    "ptcgoCode": "CEL",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/celebrations.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/celebrations.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "shining-fates-shiny-vault",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/shining-fates-shiny-vault",
+    "displayName": "Shining Fates Shiny Vault",
+    "releaseDate": "February 2021",
+    "ptcgoCode": "SHF",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/shining-fates.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/shining-fates.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2021",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2021",
+    "displayName": "McDonald's Collection 2021",
+    "releaseDate": "February 2021",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2021.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pokemon-futsal-collection",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pokemon-futsal-collection",
+    "displayName": "Pokémon Futsal Collection",
+    "releaseDate": "September 2020",
+    "ptcgoCode": "FUT20",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/fustal-promos.png",
+    "logoUrl": null,
+    "reasons": [
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2019",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2019",
+    "displayName": "McDonald's Collection 2019",
+    "releaseDate": "October 2019",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2019.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "hidden-fates-shiny-vault",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/hidden-fates-shiny-vault",
+    "displayName": "Hidden Fates Shiny Vault",
+    "releaseDate": "August 2019",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/hidden-fates-shiny-vault.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/hidden-fates-shiny-vault.png",
+    "reasons": [
+      "subset_entry",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2018",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2018",
+    "displayName": "McDonald's Collection 2018",
+    "releaseDate": "October 2018",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2018.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2017",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2017",
+    "displayName": "McDonald's Collection 2017",
+    "releaseDate": "November 2017",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2017.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "sun-and-moon-trainer-kit-alolan-raichu",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/sun-and-moon-trainer-kit-alolan-raichu",
+    "displayName": "Sun & Moon Trainer Kit Alolan Raichu",
+    "releaseDate": "April 2017",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/sun-and-moon-trainer-kit-raichu.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "sun-and-moon-trainer-kit-lycanroc",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/sun-and-moon-trainer-kit-lycanroc",
+    "displayName": "Sun & Moon Trainer Kit Lycanroc",
+    "releaseDate": "April 2017",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/sun-and-moon-trainer-kit-lycanroc.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2016",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2016",
+    "displayName": "McDonald's Collection 2016",
+    "releaseDate": "August 2016",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2016.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-pikachu-libre",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-pikachu-libre",
+    "displayName": "XY Trainer Kit Pikachu Libre",
+    "releaseDate": "April 2016",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-libre-pikachu.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-suicune",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-suicune",
+    "displayName": "XY Trainer Kit Suicune",
+    "releaseDate": "April 2016",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-suicune.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2015",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2015",
+    "displayName": "McDonald's Collection 2015",
+    "releaseDate": "November 2015",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2015.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-latias",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-latias",
+    "displayName": "XY Trainer Kit Latias",
+    "releaseDate": "April 2015",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-latias.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-latios",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-latios",
+    "displayName": "XY Trainer Kit Latios",
+    "releaseDate": "April 2015",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-latios.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-bisharp",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-bisharp",
+    "displayName": "XY Trainer Kit Bisharp",
+    "releaseDate": "November 2014",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-bisharp.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-wigglytuff",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-wigglytuff",
+    "displayName": "XY Trainer Kit Wigglytuff",
+    "releaseDate": "November 2014",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-wigglytuff.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2014",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2014",
+    "displayName": "McDonald's Collection 2014",
+    "releaseDate": "May 2014",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2014.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-noivern",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-noivern",
+    "displayName": "XY Trainer Kit Noivern",
+    "releaseDate": "March 2014",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-noivern.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "xy-trainer-kit-sylveon",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-trainer-kit-sylveon",
+    "displayName": "XY Trainer Kit Sylveon",
+    "releaseDate": "March 2014",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/xy-trainer-kit-sylveon.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2012",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2012",
+    "displayName": "McDonald's Collection 2012",
+    "releaseDate": "June 2012",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2012.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "black-and-white-trainer-kit-excadrill",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/black-and-white-trainer-kit-excadrill",
+    "displayName": "Black & White Trainer Kit Excadrill",
+    "releaseDate": "September 2011",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/black-and-white-trainer-kit-excadrill.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "black-and-white-trainer-kit-zoroark",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/black-and-white-trainer-kit-zoroark",
+    "displayName": "Black & White Trainer Kit Zoroark",
+    "releaseDate": "September 2011",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/black-and-white-trainer-kit-zoroark.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "mc-donalds-collection-2011",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/mc-donalds-collection-2011",
+    "displayName": "McDonald's Collection 2011",
+    "releaseDate": "June 2011",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/mcdonalds-collection-2011.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "hs-trainer-kit-gyarados",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/hs-trainer-kit-gyarados",
+    "displayName": "HS Trainer Kit Gyarados",
+    "releaseDate": "May 2010",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/heartgold-and-soulsilver-trainer-kit-gyarados.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "hs-trainer-kit-raichu",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/hs-trainer-kit-raichu",
+    "displayName": "HS Trainer Kit Raichu",
+    "releaseDate": "May 2010",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/heartgold-and-soulsilver-trainer-kit-raichu.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pokemon-rumble",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pokemon-rumble",
+    "displayName": "Pokémon Rumble",
+    "releaseDate": "December 2009",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pokemon-rumble.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pokemon-rumble.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-9",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-9",
+    "displayName": "POP Series 9",
+    "releaseDate": "March 2009",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-9.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-9.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-8",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-8",
+    "displayName": "POP Series 8",
+    "releaseDate": "August 2008",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-8.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-8.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-7",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-7",
+    "displayName": "POP Series 7",
+    "releaseDate": "March 2008",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-7.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-7.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "diamond-and-pearl-trainer-kit-lucario",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/diamond-and-pearl-trainer-kit-lucario",
+    "displayName": "Diamond & Pearl Trainer Kit Lucario",
+    "releaseDate": "September 2007",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/diamond-and-pearl-trainer-kit-lucario.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "diamond-and-pearl-trainer-kit-manaphy",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/diamond-and-pearl-trainer-kit-manaphy",
+    "displayName": "Diamond & Pearl Trainer Kit Manaphy",
+    "releaseDate": "September 2007",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/diamond-and-pearl-trainer-kit-manaphy.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-6",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-6",
+    "displayName": "POP Series 6",
+    "releaseDate": "August 2007",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-6.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-6.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "dp-black-star-promos",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/dp-black-star-promos",
+    "displayName": "DP Black Star Promos",
+    "releaseDate": "April 2007",
+    "ptcgoCode": "PR-DPP",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/_promo.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/dp-black-star-promos.png",
+    "reasons": [
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-5",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-5",
+    "displayName": "POP Series 5",
+    "releaseDate": "March 2007",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-5.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-5.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-4",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-4",
+    "displayName": "POP Series 4",
+    "releaseDate": "July 2006",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-4.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-4.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-3",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-3",
+    "displayName": "POP Series 3",
+    "releaseDate": "March 2006",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-3.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-3.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "ex-trainer-kit-2-minun",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/ex-trainer-kit-2-minun",
+    "displayName": "EX Trainer Kit 2 Minun",
+    "releaseDate": "March 2006",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/ex-trainer-kit-2-minun.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "ex-trainer-kit-2-plusle",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/ex-trainer-kit-2-plusle",
+    "displayName": "EX Trainer Kit 2 Plusle",
+    "releaseDate": "March 2006",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/ex-trainer-kit-2-plusle.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-2",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-2",
+    "displayName": "POP Series 2",
+    "releaseDate": "July 2005",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-2.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-2.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "pop-series-1",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/pop-series-1",
+    "displayName": "POP Series 1",
+    "releaseDate": "August 2004",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/pop-1.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/pop-1.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "ex-trainer-kit-latias",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/ex-trainer-kit-latias",
+    "displayName": "EX Trainer Kit Latias",
+    "releaseDate": "May 2004",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/ex-trainer-kit-latias.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "ex-trainer-kit-latios",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/ex-trainer-kit-latios",
+    "displayName": "EX Trainer Kit Latios",
+    "releaseDate": "May 2004",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/ex-trainer-kit-latios.png",
+    "logoUrl": null,
+    "reasons": [
+      "no_ptcgo_code",
+      "missing_logo",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "best-of-game",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/best-of-game",
+    "displayName": "Best of Game",
+    "releaseDate": "December 2002",
+    "ptcgoCode": "BP",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/best-of-game.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/best-of-game.png",
+    "reasons": [
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "southern-islands",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/southern-islands",
+    "displayName": "Southern Islands",
+    "releaseDate": "July 2001",
+    "ptcgoCode": null,
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/southern-islands.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/southern-islands.png",
+    "reasons": [
+      "no_ptcgo_code",
+      "no_smeargle_set_match"
+    ]
+  },
+  {
+    "slug": "base",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/base",
+    "displayName": "Base",
+    "releaseDate": "January 1999",
+    "ptcgoCode": "BS",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/logos/base.png",
+    "logoUrl": null,
+    "reasons": [
+      "missing_logo"
+    ]
+  },
+  {
+    "slug": "heart-gold-and-soul-silver",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/heart-gold-and-soul-silver",
+    "displayName": "HeartGold & SoulSilver",
+    "releaseDate": "February 2010",
+    "ptcgoCode": "HS",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/heartgold-soulsilver.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/heartgold-soulsilver.png",
+    "setCode": "HS",
+    "normalizedName": "heartgold and soulsilver",
+    "mappingSource": "ptcgo_code",
+    "reasons": [
+      "HTTP 404 Not Found"
+    ]
+  },
+  {
+    "slug": "scarlet-and-violet-black-star-promos",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/scarlet-and-violet-black-star-promos",
+    "displayName": "Scarlet & Violet Black Star Promos",
+    "releaseDate": "January 2023",
+    "ptcgoCode": "PR-SV",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/_promo.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/_promo.png",
+    "setCode": "SVP",
+    "normalizedName": "scarlet and violet black star promos",
+    "mappingSource": "name_alias",
+    "reasons": [
+      "HTTP 404 Not Found"
+    ]
+  },
+  {
+    "slug": "swsh-black-star-promos",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/swsh-black-star-promos",
+    "displayName": "SWSH Black Star Promos",
+    "releaseDate": "November 2019",
+    "ptcgoCode": "PR-SW",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/_promo.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/_promo.png",
+    "setCode": "SWSHP",
+    "normalizedName": "swsh black star promos",
+    "mappingSource": "name_alias",
+    "reasons": [
+      "HTTP 404 Not Found"
+    ]
+  },
+  {
+    "slug": "xy-black-star-promos",
+    "detailUrl": "https://pokesymbols.com/tcg/sets/xy-black-star-promos",
+    "displayName": "XY Black Star Promos",
+    "releaseDate": "October 2013",
+    "ptcgoCode": "PR-XY",
+    "symbolUrl": "https://pokesymbols.com/images/tcg/sets/symbols/_promo.png",
+    "logoUrl": "https://pokesymbols.com/images/tcg/sets/logos/_promo.png",
+    "setCode": "XYP",
+    "normalizedName": "xy black star promos",
+    "mappingSource": "name_alias",
+    "reasons": [
+      "HTTP 404 Not Found"
+    ]
+  }
+]
