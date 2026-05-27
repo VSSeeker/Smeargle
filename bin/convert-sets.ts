@@ -20,7 +20,7 @@ import {
   getImageDimensions,
   transparentAssetAvifOptions,
 } from "./lib/convert";
-import { assetsPath, cachePath, outPath, tmpPath } from "./lib/paths";
+import { assetsPath, cachePath, outPath } from "./lib/paths";
 
 type SetAssetPaths = {
   code: string;
@@ -39,8 +39,6 @@ const pollIntervalMs = 500;
 const activeDownloadMarkerMaxAgeMs = 2 * 60 * 60 * 1000;
 
 const dimensions: Record<string, { width: number; height: number }> = {};
-
-await fs.promises.mkdir(tmpPath, { recursive: true });
 
 // ============================================================================
 // Process set logos and symbols
@@ -201,11 +199,10 @@ function getSetAssetPaths(code: string): SetAssetPaths {
 }
 
 function getTempFile(outputFile: string): string {
+  const randomPart = Math.random().toString(36).slice(2);
   return path.join(
-    tmpPath,
-    `${path.basename(outputFile, ".avif")}.${process.pid}.${Date.now()}.${Math.random()
-      .toString(36)
-      .slice(2)}.avif`,
+    path.dirname(outputFile),
+    `.${path.basename(outputFile, ".avif")}.${randomPart}.avif`,
   );
 }
 

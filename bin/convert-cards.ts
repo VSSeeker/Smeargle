@@ -30,7 +30,7 @@ import {
   waitForFile,
 } from "./lib/convert";
 import { writeSmeargleManifest } from "./lib/manifest";
-import { assetsPath, cachePath, tmpPath } from "./lib/paths";
+import { assetsPath, cachePath } from "./lib/paths";
 
 type CardCacheKind = {
   cacheSubdir: "cards" | "foils";
@@ -61,8 +61,6 @@ const initialCacheWaitMs = 5000;
 const idleTimeoutMs = 5000;
 const pollIntervalMs = 500;
 const activeDownloadMarkerMaxAgeMs = 2 * 60 * 60 * 1000;
-
-await fs.promises.mkdir(tmpPath, { recursive: true });
 
 // ============================================================================
 // Process cached regular and foil images
@@ -281,11 +279,10 @@ async function convertCardWithRetry(
 }
 
 function getTempFile(outputFile: string, extension: string): string {
+  const randomPart = Math.random().toString(36).slice(2);
   return path.join(
-    tmpPath,
-    `${path.basename(outputFile, ".avif")}.${process.pid}.${Date.now()}.${Math.random()
-      .toString(36)
-      .slice(2)}${extension}`,
+    path.dirname(outputFile),
+    `.${path.basename(outputFile, ".avif")}.${randomPart}${extension}`,
   );
 }
 
