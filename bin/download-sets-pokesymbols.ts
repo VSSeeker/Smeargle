@@ -2,17 +2,17 @@
  * Download Pokemon TCG set logos and symbols from PokeSymbols.
  *
  * PokeSymbols is used as a high-quality archive source. Assets are written
- * into the existing set cache shape so bin/convert-sets.ts can stay unchanged.
+ * directly into src/sets.
  *
  * Environment variables:
- * - OVERRIDE_SETS=1: Re-download set assets even if already cached
+ * - OVERRIDE_SETS=1: Re-download set assets even if already present in src/sets
  */
 
 import * as fs from "fs";
 import * as path from "path";
 
 import { writeFileAtomic } from "./lib/download";
-import { cachePath } from "./lib/paths";
+import { srcPath } from "./lib/paths";
 import {
   type ImageMetadata,
   type PokeSymbolsSetMapEntry,
@@ -20,29 +20,10 @@ import {
   buildPokeSymbolsSetMap,
   fetchImageBytes,
   inspectImageFile,
-  writeJsonFile,
   writePokeSymbolsSetMap,
 } from "./lib/pokesymbols";
 
 type SetAssetKind = "symbol" | "logo";
-
-type CachedSetAssetMetadata = ImageMetadata & {
-  sourceUrl: string;
-  contentType: string | null;
-  cacheFile: string;
-  reusedExistingCache: boolean;
-};
-
-type CachedSetMetadata = {
-  source: "PokeSymbols";
-  slug: string;
-  displayName: string;
-  releaseDate: string | null;
-  ptcgoCode: string | null;
-  setCode: string;
-  detailUrl: string;
-  assets: Partial<Record<SetAssetKind, CachedSetAssetMetadata>>;
-};
 
 class AssetRejection extends Error {
   reasons: string[];
@@ -55,10 +36,10 @@ class AssetRejection extends Error {
 
 const locale = "en-US";
 const overrideSets = process.env.OVERRIDE_SETS === "1";
-const setsCachePath = path.join(cachePath, "sets", locale);
-const downloadMarker = path.join(setsCachePath, `.download-active.${process.pid}`);
+const setsSrcPath = path.join(srcPath, "sets", locale);
+const downloadMarker = path.join(setsSrcPath, `.download-active.${process.pid}`);
 
-await fs.promises.mkdir(setsCachePath, { recursive: true });
+await fs.promises.mkdir(setsSrcPath, { recursive: true });
 await writeFileAtomic(downloadMarker, `${process.pid}\n`);
 
 try {
@@ -66,23 +47,12 @@ try {
   const rejectedSets: Array<PokeSymbolsUnmatchedSet & { setCode?: string }> = [...unmatchedSets];
 
   for (const entry of Object.values(setMap.sets)) {
-    const setCachePath = path.join(setsCachePath, entry.setCode);
-    const metadata: CachedSetMetadata = {
-      source: "PokeSymbols",
-      slug: entry.slug,
-      displayName: entry.displayName,
-      releaseDate: entry.releaseDate,
-      ptcgoCode: entry.ptcgoCode,
-      setCode: entry.setCode,
-      detailUrl: entry.detailUrl,
-      assets: {},
-    };
+    const setSrcPath = path.join(setsSrcPath, entry.setCode);
 
     try {
       console.log(`[${locale}] ${entry.setCode} ${entry.displayName}`);
-      metadata.assets.symbol = await cacheSetAsset(entry, "symbol", setCachePath);
-      metadata.assets.logo = await cacheSetAsset(entry, "logo", setCachePath);
-      await writeJsonFile(path.join(setCachePath, "pokesymbols-metadata.json"), metadata);
+      await writeSetAsset(entry, "symbol", setSrcPath);
+      await writeSetAsset(entry, "logo", setSrcPath);
     } catch (error) {
       rejectedSets.push({
         ...entry,
@@ -101,54 +71,38 @@ try {
   await fs.promises.unlink(downloadMarker).catch(() => {});
 }
 
-async function cacheSetAsset(
+async function writeSetAsset(
   entry: PokeSymbolsSetMapEntry,
   kind: SetAssetKind,
-  setCachePath: string,
-): Promise<CachedSetAssetMetadata> {
+  setSrcPath: string,
+): Promise<void> {
   const sourceUrl = kind === "symbol" ? entry.symbolUrl : entry.logoUrl;
   if (!sourceUrl) throw new AssetRejection([`missing_${kind}`]);
 
-  const outputFile = path.join(setCachePath, `${kind}.png`);
+  const outputFile = path.join(setSrcPath, `${kind}.png`);
 
   if (!overrideSets && fs.existsSync(outputFile)) {
     const metadata = await inspectImageFile(outputFile);
     const reasons = validateSetAsset(kind, metadata);
     if (reasons.length > 0) throw new AssetRejection(reasons);
-
-    return {
-      ...metadata,
-      sourceUrl,
-      contentType: null,
-      cacheFile: outputFile,
-      reusedExistingCache: true,
-    };
+    return;
   }
 
   const temporaryFile = path.join(
-    setCachePath,
+    setSrcPath,
     `.${kind}.${process.pid}.${Date.now()}.${Math.random().toString(36).slice(2)}.png`,
   );
 
   try {
-    const download = await fetchImageBytes(sourceUrl);
-    await fs.promises.mkdir(setCachePath, { recursive: true });
-    await writeFileAtomic(temporaryFile, download.bytes);
+    const { bytes } = await fetchImageBytes(sourceUrl);
+    await fs.promises.mkdir(setSrcPath, { recursive: true });
+    await writeFileAtomic(temporaryFile, bytes);
 
     const metadata = await inspectImageFile(temporaryFile);
     const reasons = validateSetAsset(kind, metadata);
     if (reasons.length > 0) throw new AssetRejection(reasons);
 
     await fs.promises.rename(temporaryFile, outputFile);
-
-    return {
-      ...metadata,
-      contentHash: download.contentHash,
-      sourceUrl,
-      contentType: download.contentType,
-      cacheFile: outputFile,
-      reusedExistingCache: false,
-    };
   } finally {
     await fs.promises.unlink(temporaryFile).catch(() => {});
   }

@@ -33,6 +33,24 @@ export async function downloadFile(from: string, to: string, init?: RequestInit)
   await writeFileAtomic(to, contents);
 }
 
+export async function copyFileAtomic(from: string, to: string): Promise<void> {
+  const outputDir = path.dirname(to);
+  const tempFile = path.join(
+    outputDir,
+    `.${path.basename(to)}.${process.pid}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`,
+  );
+
+  await fs.promises.mkdir(outputDir, { recursive: true });
+
+  try {
+    await fs.promises.copyFile(from, tempFile);
+    await fs.promises.rename(tempFile, to);
+  } catch (error) {
+    await fs.promises.unlink(tempFile).catch(() => {});
+    throw error;
+  }
+}
+
 export async function writeFileAtomic(to: string, contents: string | ArrayBuffer): Promise<void> {
   const outputDir = path.dirname(to);
   const tempFile = path.join(

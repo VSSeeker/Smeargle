@@ -26,6 +26,7 @@ bin/                    # CLI scripts (run with `bun ./bin/<script>.ts`)
   malieimages.json         # Card image URL mappings
   maliefoils.json          # Foil card image URL mappings
 assets/                 # Output AVIF images (by locale/set)
+src/                    # Downloaded set PNG source images mirrored from cache
 out/                    # Additional output
 ```
 
@@ -55,5 +56,5 @@ bun run check            # Check code with Biome
 ## Notes
 
 - Download and convert scripts can run simultaneously (convert waits for files)
-- Cache is stored in platform-specific cache directory via `env-paths`
+- Downloaded set PNG sources are mirrored to `src/sets` and cached via `env-paths`
 - Assets are organized by locale, then by set ID

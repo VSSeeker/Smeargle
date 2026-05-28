@@ -13,14 +13,14 @@
 import { load as cheerioLoad } from "cheerio";
 import * as fs from "fs";
 import * as path from "path";
-import { downloadFile, fetchText } from "./lib/download";
-import { cachePath } from "./lib/paths";
+import { copyFileAtomic, downloadFile, fetchText } from "./lib/download";
+import { srcPath } from "./lib/paths";
 
 const locale = "en-US";
-const setsCachePath = path.join(cachePath, "sets", locale);
-const downloadMarker = path.join(setsCachePath, `.download-active.${process.pid}`);
+const setsSrcPath = path.join(srcPath, "sets", locale);
+const downloadMarker = path.join(setsSrcPath, `.download-active.${process.pid}`);
 
-await fs.promises.mkdir(setsCachePath, { recursive: true });
+await fs.promises.mkdir(setsSrcPath, { recursive: true });
 await Bun.write(downloadMarker, `${process.pid}\n`);
 process.on("exit", () => {
   fs.rmSync(downloadMarker, { force: true });
@@ -78,17 +78,16 @@ for (const row of setRows) {
   // Only rows with 8 columns contain logos and symbols for main sets
   if (cols !== 8) continue;
 
-  const setCachePath = path.join(setsCachePath, abbr);
-  await fs.promises.mkdir(setCachePath, { recursive: true });
+  const setSrcPath = path.join(setsSrcPath, abbr);
 
   // Download set logo (2nd image in row)
   const setLogo = $sets(row).find("img").eq(1).attr("src");
   if (setLogo) {
     const setLogoDownloadUrl = convertMWThumb(setLogo);
-    console.log(`${abbr} [${setLogoDownloadUrl}] => ${setCachePath}`);
+    console.log(`${abbr} [${setLogoDownloadUrl}] => ${setSrcPath}`);
     try {
-      const setLogoPath = path.join(setCachePath, `logo.png`);
-      await writeCache(setLogoDownloadUrl, setLogoPath);
+      const setLogoPath = path.join(setSrcPath, "logo.png");
+      await writeSetSource(setLogoDownloadUrl, setLogoPath);
     } catch (e) {
       console.error(e);
     }
@@ -98,10 +97,10 @@ for (const row of setRows) {
   const setSymbol = $sets(row).find("img").eq(0).attr("src");
   if (setSymbol) {
     const setSymbolDownloadUrl = convertMWThumb(setSymbol);
-    console.log(`${abbr} [${setSymbolDownloadUrl}] => ${setCachePath}`);
+    console.log(`${abbr} [${setSymbolDownloadUrl}] => ${setSrcPath}`);
     try {
-      const setSymbolPath = path.join(setCachePath, `symbol.png`);
-      await writeCache(setSymbolDownloadUrl, setSymbolPath);
+      const setSymbolPath = path.join(setSrcPath, "symbol.png");
+      await writeSetSource(setSymbolDownloadUrl, setSymbolPath);
     } catch (e) {
       console.error(e);
     }
@@ -112,27 +111,25 @@ for (const row of setRows) {
 // Promo sets: Download NP symbol and clone to generation-specific promo sets
 // ============================================================================
 
-const promoBase = path.join(setsCachePath, "NP");
-await fs.promises.mkdir(promoBase, { recursive: true });
+const promoBase = path.join(setsSrcPath, "NP");
 
 // Download the base promo symbol
 const npSymbolUrl = convertMWThumb(
   "https://archives.bulbagarden.net/media/upload/thumb/5/58/SetSymbolPromo.png/1920px-SetSymbolPromo.png",
 );
-await writeCache(npSymbolUrl, path.join(promoBase, "symbol.png"));
+await writeSetSource(npSymbolUrl, path.join(promoBase, "symbol.png"));
 
 // Clone NP symbol to generation-specific promo sets
 const promoSets = ["HSP", "BWP", "XYP", "SMP", "SWSHP", "SVP"];
 const npSymbolFile = path.join(promoBase, `symbol.png`);
 
 for (const set of promoSets) {
-  const promoPath = path.join(setsCachePath, set);
+  const promoPath = path.join(setsSrcPath, set);
   const outputFile = path.join(promoPath, "symbol.png");
-  if (!fs.existsSync(outputFile)) {
-    console.log("Clone", set, npSymbolFile, outputFile);
-    await fs.promises.mkdir(promoPath, { recursive: true });
-    await fs.promises.copyFile(npSymbolFile, outputFile);
-  }
+  if (fs.existsSync(outputFile)) continue;
+
+  console.log("Clone", set, npSymbolFile, outputFile);
+  await copyFileAtomic(npSymbolFile, outputFile);
 }
 
 // ============================================================================
@@ -157,13 +154,12 @@ const tkSetSymbols = {
 };
 
 for (const [code, url] of Object.entries(tkSetSymbols)) {
-  const setCachePath = path.join(setsCachePath, code);
-  await fs.promises.mkdir(setCachePath, { recursive: true });
+  const setSrcPath = path.join(setsSrcPath, code);
   const setSymbolDownloadUrl = convertMWThumb(url);
-  console.log(`${code} [${setSymbolDownloadUrl}] => ${setCachePath}`);
+  console.log(`${code} [${setSymbolDownloadUrl}] => ${setSrcPath}`);
   try {
-    const setSymbolPath = path.join(setCachePath, `symbol.png`);
-    await writeCache(setSymbolDownloadUrl, setSymbolPath);
+    const setSymbolPath = path.join(setSrcPath, "symbol.png");
+    await writeSetSource(setSymbolDownloadUrl, setSymbolPath);
   } catch (e) {
     console.error(e);
   }
@@ -176,12 +172,12 @@ await fs.promises.unlink(downloadMarker).catch(() => {});
 // ============================================================================
 
 /**
- * Download and cache a file if it doesn't already exist
+ * Download a set source file if it doesn't already exist.
  */
-async function writeCache(from: string, to: string) {
-  if (fs.existsSync(to)) return;
-  console.log(to);
-  await downloadFile(from, to);
+async function writeSetSource(from: string, srcFile: string) {
+  if (fs.existsSync(srcFile)) return;
+  console.log(srcFile);
+  await downloadFile(from, srcFile);
 }
 
 /**

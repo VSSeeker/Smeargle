@@ -13,6 +13,9 @@ export const outPath = path.resolve(import.meta.dir, "../../out");
 /** Assets directory for processed images */
 export const assetsPath = path.resolve(import.meta.dir, "../../assets");
 
+/** Source directory for downloaded image files */
+export const srcPath = path.resolve(import.meta.dir, "../../src");
+
 /** Environment-specific paths (cache, temp, etc.) */
 export const paths = envPaths("smeargle");
 

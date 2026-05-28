@@ -1,7 +1,7 @@
 /**
  * Convert Pokémon TCG set logos and symbols from PNG to AVIF format
  *
- * This script processes cached set images (logos and symbols) and converts
+ * This script processes set source images (logos and symbols) and converts
  * them to optimized AVIF format. It also extracts logo dimensions for use
  * in the application.
  *
@@ -20,7 +20,7 @@ import {
   getImageDimensions,
   transparentAssetAvifOptions,
 } from "./lib/convert";
-import { assetsPath, cachePath, outPath } from "./lib/paths";
+import { assetsPath, outPath, srcPath } from "./lib/paths";
 
 type SetAssetPaths = {
   code: string;
@@ -32,8 +32,8 @@ type SetAssetPaths = {
 };
 
 const locale = "en-US";
-const setsCachePath = path.join(cachePath, "sets", locale);
-const initialCacheWaitMs = 5000;
+const setsSrcPath = path.join(srcPath, "sets", locale);
+const initialSourceWaitMs = 5000;
 const idleTimeoutMs = 5000;
 const pollIntervalMs = 500;
 const activeDownloadMarkerMaxAgeMs = 2 * 60 * 60 * 1000;
@@ -44,7 +44,7 @@ const dimensions: Record<string, { width: number; height: number }> = {};
 // Process set logos and symbols
 // ============================================================================
 
-await convertCachedSets();
+await convertSetSources();
 
 // ============================================================================
 // Write logo dimensions to output
@@ -59,10 +59,10 @@ await Bun.write(dimensionsFile, JSON.stringify(dimensions, null, 2));
 // Helper functions
 // ============================================================================
 
-async function convertCachedSets(): Promise<void> {
-  const hasCacheRoot = await waitForDirectory(setsCachePath, initialCacheWaitMs);
-  if (!hasCacheRoot) {
-    console.warn(`No set cache directory found: ${setsCachePath}`);
+async function convertSetSources(): Promise<void> {
+  const hasInputRoot = await waitForAnyDirectory([setsSrcPath], initialSourceWaitMs);
+  if (!hasInputRoot) {
+    console.warn(`No set source directory found in ${setsSrcPath}`);
     return;
   }
 
@@ -166,12 +166,14 @@ async function convertSetAsset(inputFile: string, outputFile: string): Promise<v
 }
 
 async function listSetCodes(): Promise<string[]> {
-  const entries = await readDirEntries(setsCachePath);
-  return entries
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((code) => code !== ".DS_Store")
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const setCodes = new Set<string>();
+
+  const entries = await readDirEntries(setsSrcPath);
+  for (const entry of entries) {
+    if (entry.isDirectory() && entry.name !== ".DS_Store") setCodes.add(entry.name);
+  }
+
+  return [...setCodes].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }
 
 async function readDirEntries(dir: string): Promise<fs.Dirent[]> {
@@ -184,8 +186,8 @@ async function readDirEntries(dir: string): Promise<fs.Dirent[]> {
 }
 
 function getSetAssetPaths(code: string): SetAssetPaths {
-  const logoFile = path.join(setsCachePath, code, "logo.png");
-  const symbolFile = path.join(setsCachePath, code, "symbol.png");
+  const logoFile = path.join(setsSrcPath, code, "logo.png");
+  const symbolFile = path.join(setsSrcPath, code, "symbol.png");
   const outputDir = path.join(assetsPath, locale, code);
 
   return {
@@ -207,12 +209,12 @@ function getTempFile(outputFile: string): string {
 }
 
 async function hasActiveDownload(): Promise<boolean> {
-  const entries = await readDirEntries(setsCachePath);
+  const entries = await readDirEntries(setsSrcPath);
 
   for (const entry of entries) {
     if (!entry.isFile() || !entry.name.startsWith(".download-active.")) continue;
 
-    const markerPath = path.join(setsCachePath, entry.name);
+    const markerPath = path.join(setsSrcPath, entry.name);
     const markerAgeMs = await fs.promises
       .stat(markerPath)
       .then((stat) => Date.now() - stat.mtimeMs)
@@ -224,16 +226,19 @@ async function hasActiveDownload(): Promise<boolean> {
   return false;
 }
 
-async function waitForDirectory(dir: string, timeoutMs: number): Promise<boolean> {
+async function waitForAnyDirectory(dirs: string[], timeoutMs: number): Promise<boolean> {
   const startTime = Date.now();
 
   while (Date.now() - startTime < timeoutMs) {
-    const isDirectory = await fs.promises
-      .stat(dir)
-      .then((stat) => stat.isDirectory())
-      .catch(() => false);
+    for (const dir of dirs) {
+      const isDirectory = await fs.promises
+        .stat(dir)
+        .then((stat) => stat.isDirectory())
+        .catch(() => false);
 
-    if (isDirectory) return true;
+      if (isDirectory) return true;
+    }
+
     await sleep(pollIntervalMs);
   }
 
