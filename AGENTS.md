@@ -15,7 +15,7 @@ Smeargle is a Pokémon TCG image asset pipeline that downloads card images, set 
 
 ```
 bin/                    # CLI scripts (run with `bun ./bin/<script>.ts`)
-  download-cards-malie.ts  # Downloads card images from malie.io CDN
+  download-cards-malie.ts  # Downloads card images from Rotom's imageurls.json
   download-sets.ts         # Downloads set logos and symbols
   convert-cards.ts         # Converts card PNGs to AVIF
   convert-sets.ts          # Converts set asset PNGs to AVIF
@@ -23,8 +23,7 @@ bin/                    # CLI scripts (run with `bun ./bin/<script>.ts`)
     paths.ts               # Cache and asset path definitions
     convert.ts             # Image conversion helpers
   locales.ts               # Supported locale list
-  malieimages.json         # Card image URL mappings
-  maliefoils.json          # Foil card image URL mappings
+  imageurls.json           # Card/foil image URL mappings from Rotom
 assets/                 # Output AVIF images (by locale/set)
 src/                    # Downloaded set PNG source images mirrored from cache
 out/                    # Additional output
@@ -52,6 +51,8 @@ bun run check            # Check code with Biome
 
 - `OVERRIDE_CARDS=1`: Re-download cards even if cached
 - `DOWNLOAD_EXISTING_CARDS=1`: Download even if already in assets
+- `DRY_RUN_CARDS=1`: Validate card manifest paths without fetching images
+- `CARD_FILTER=BS#4,PKT/A1#001`: Process only specific canonical print IDs
 
 ## Notes
 

@@ -8,7 +8,7 @@
       "!!**/assets/**",
       "!!**/.claude/**",
       "!!**/out/**",
-      "!!**/bin/malieimages.json",
+      "!!**/bin/imageurls.json",
       "!!**/bun.lock"
     ]
   },

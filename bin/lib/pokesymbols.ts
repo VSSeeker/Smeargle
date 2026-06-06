@@ -4,8 +4,9 @@ import { createHash } from "crypto";
 import * as fs from "fs";
 import * as path from "path";
 
-import imageUrls from "../malieimages.json";
+import imageUrls from "../imageurls.json";
 import aliasConfig from "../pokesymbols-set-aliases.json";
+import { getSetCodeFromImageUrlKey } from "./image-keys";
 import { assetsPath, outPath } from "./paths";
 import { fetchText, writeFileAtomic } from "./download";
 
@@ -275,9 +276,8 @@ async function fetchPokeSymbolsSetDetail(link: {
 async function getKnownSetCodes(locale: string): Promise<Set<string>> {
   const knownSetCodes = new Set<string>();
 
-  for (const cardPath of Object.keys(imageUrls)) {
-    const separatorIndex = cardPath.indexOf("/");
-    if (separatorIndex !== -1) knownSetCodes.add(cardPath.slice(0, separatorIndex));
+  for (const imageKey of Object.keys(imageUrls.cards)) {
+    knownSetCodes.add(getSetCodeFromImageUrlKey(imageKey));
   }
 
   for (const aliasSetCode of [

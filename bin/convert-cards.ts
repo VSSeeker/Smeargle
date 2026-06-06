@@ -29,6 +29,7 @@ import {
   removeAlpha,
   waitForFile,
 } from "./lib/convert";
+import { formatImageUrlKey, parseImageUrlKey } from "./lib/image-keys";
 import { writeSmeargleManifest } from "./lib/manifest";
 import { assetsPath, cachePath } from "./lib/paths";
 
@@ -41,8 +42,8 @@ type CardCacheKind = {
 type CachedCardFile = {
   inputFile: string;
   locale: string;
-  setId: string;
-  cardName: string;
+  pathParts: string[];
+  displayPath: string;
 };
 
 const cardCacheKinds: CardCacheKind[] = [
@@ -53,6 +54,7 @@ const selectedCardImageKinds = parseCardImageKinds({
   args: Bun.argv.slice(2),
   command: "bun ./bin/convert-cards.ts",
 });
+const selectedCardPaths = parseCardFilter(process.env.CARD_FILTER);
 const selectedCardCacheKinds = cardCacheKinds.filter((cacheKind) =>
   selectedCardImageKinds.includes(cacheKind.cacheSubdir),
 );
@@ -95,15 +97,17 @@ async function convertCachedCards(): Promise<void> {
         if (processedFiles.has(processedKey)) continue;
 
         const outputFile = getOutputFile(cacheKind, cachedFile);
+        if (selectedCardPaths && !selectedCardPaths.has(cachedFile.displayPath)) {
+          processedFiles.add(processedKey);
+          continue;
+        }
         if (fileExists(outputFile)) {
           processedFiles.add(processedKey);
           continue;
         }
 
         await fs.promises.mkdir(path.dirname(outputFile), { recursive: true });
-        console.log(
-          `[${cachedFile.locale}] ${cachedFile.setId} ${cachedFile.cardName} ${cacheKind.label}`,
-        );
+        console.log(`[${cachedFile.locale}] ${cachedFile.displayPath} ${cacheKind.label}`);
 
         await convertCardWithRetry(cacheKind, cachedFile.inputFile, outputFile);
         processedFiles.add(processedKey);
@@ -136,30 +140,38 @@ async function listCachedCardFiles(cacheRoot: string): Promise<CachedCardFile[]>
     if (!localeEntry.isDirectory()) continue;
 
     const locale = localeEntry.name;
-    const localeDir = path.join(cacheRoot, locale);
-    const setEntries = await readDirEntries(localeDir);
-
-    for (const setEntry of setEntries) {
-      if (!setEntry.isDirectory()) continue;
-
-      const setId = setEntry.name;
-      const setDir = path.join(localeDir, setId);
-      const fileEntries = await readDirEntries(setDir);
-
-      for (const fileEntry of fileEntries) {
-        if (!fileEntry.isFile() || !fileEntry.name.endsWith(".png")) continue;
-
-        cachedFiles.push({
-          inputFile: path.join(setDir, fileEntry.name),
-          locale,
-          setId,
-          cardName: path.basename(fileEntry.name, ".png"),
-        });
-      }
-    }
+    await collectCachedCardFiles(path.join(cacheRoot, locale), locale, [], cachedFiles);
   }
 
   return cachedFiles.sort(compareCachedCards);
+}
+
+async function collectCachedCardFiles(
+  currentDir: string,
+  locale: string,
+  pathParts: string[],
+  cachedFiles: CachedCardFile[],
+): Promise<void> {
+  const entries = await readDirEntries(currentDir);
+
+  for (const entry of entries) {
+    const entryPath = path.join(currentDir, entry.name);
+
+    if (entry.isDirectory()) {
+      await collectCachedCardFiles(entryPath, locale, [...pathParts, entry.name], cachedFiles);
+      continue;
+    }
+
+    if (!entry.isFile() || !entry.name.endsWith(".png")) continue;
+
+    const cachedPathParts = [...pathParts, path.basename(entry.name, ".png")];
+    cachedFiles.push({
+      inputFile: entryPath,
+      locale,
+      pathParts: cachedPathParts,
+      displayPath: formatImageUrlKey(cachedPathParts),
+    });
+  }
 }
 
 async function readDirEntries(dir: string): Promise<fs.Dirent[]> {
@@ -174,20 +186,21 @@ async function readDirEntries(dir: string): Promise<fs.Dirent[]> {
 function compareCachedCards(a: CachedCardFile, b: CachedCardFile): number {
   return (
     a.locale.localeCompare(b.locale) ||
-    a.setId.localeCompare(b.setId) ||
-    compareCardName(a.cardName, b.cardName)
+    a.displayPath.localeCompare(b.displayPath, undefined, { numeric: true })
   );
 }
 
-function compareCardName(a: string, b: string): number {
-  const aNumber = Number(a.replace(/[^\d]/g, ""));
-  const bNumber = Number(b.replace(/[^\d]/g, ""));
+function parseCardFilter(value: string | undefined): Set<string> | undefined {
+  const cardPaths = value
+    ?.split(",")
+    .map((cardPath) => cardPath.trim())
+    .filter(Boolean);
+  if (!cardPaths?.length) return undefined;
 
-  if (!Number.isNaN(aNumber) && !Number.isNaN(bNumber) && aNumber !== bNumber) {
-    return aNumber - bNumber;
+  for (const cardPath of cardPaths) {
+    parseImageUrlKey(cardPath);
   }
-
-  return a.localeCompare(b, undefined, { numeric: true });
+  return new Set(cardPaths);
 }
 
 function getCacheRoot(cacheKind: CardCacheKind): string {
@@ -216,11 +229,23 @@ async function hasActiveDownloads(): Promise<boolean> {
 }
 
 function getOutputFile(cacheKind: CardCacheKind, cachedFile: CachedCardFile): string {
-  const outputDir = cacheKind.outputSubdir
-    ? path.join(assetsPath, cachedFile.locale, cachedFile.setId, cacheKind.outputSubdir)
-    : path.join(assetsPath, cachedFile.locale, cachedFile.setId);
+  const cardName = cachedFile.pathParts.at(-1);
+  if (!cardName) {
+    throw new Error(`Invalid cached card path: ${cachedFile.inputFile}`);
+  }
 
-  return path.join(outputDir, `${cachedFile.cardName}.avif`);
+  const parentPathParts = cachedFile.pathParts.slice(0, -1);
+  if (cacheKind.outputSubdir) {
+    return path.join(
+      assetsPath,
+      cachedFile.locale,
+      ...parentPathParts,
+      cacheKind.outputSubdir,
+      `${cardName}.avif`,
+    );
+  }
+
+  return path.join(assetsPath, cachedFile.locale, ...parentPathParts, `${cardName}.avif`);
 }
 
 /**
